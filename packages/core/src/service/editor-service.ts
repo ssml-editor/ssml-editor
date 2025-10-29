@@ -6,14 +6,13 @@ export class EditorService {
   constructor(editorStorageName?: string, editorHtmlConfig?: EditorHtmlConfig) {
     this._editorHtmlConfig = editorHtmlConfig;
     if (editorStorageName) {
-      const storageName = `${EditorStorageService.STORAGE_NAME_PREFIX}_${editorStorageName}`;
       if (
         editorHtmlConfig &&
         editorHtmlConfig.storageType === StorageType.LOCAL &&
         editorHtmlConfig.storageName
       ) {
         this._editorStorageService = new EditorStorageService(
-          storageName,
+          editorStorageName,
           editorHtmlConfig.storageName,
         );
       }
