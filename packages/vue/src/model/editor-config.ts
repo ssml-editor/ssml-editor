@@ -18,7 +18,7 @@ import type { EditorFooterConfig } from './editor-footer-config';
 import type { EditorToolbarConfig } from './editor-toolbar-config';
 
 export interface EditorConfig {
-  storageName?: string;
+  databaseName?: string;
   scroll?: boolean;
   placeholder?: string;
   readOnly?: boolean;

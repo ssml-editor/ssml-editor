@@ -1,8 +1,8 @@
-import { StorageType } from '@ssml-editor/core';
 import { type EditorConfig } from '@/model';
+import { StorageType } from '@ssml-editor/core';
 
 export const DefaultEditorConfig: Readonly<EditorConfig> = {
-  storageName: 'storager',
+  databaseName: 'default',
   scroll: true,
   readOnly: false,
   autoFocus: false,
@@ -12,7 +12,7 @@ export const DefaultEditorConfig: Readonly<EditorConfig> = {
   },
   html: {
     storageType: StorageType.NONE,
-    storageName: 'html',
+    storeName: 'html',
     reader: () => {
       return Promise.resolve('');
     },

@@ -7,13 +7,7 @@
       :placeholder="config.placeholder" :auto-focus="config.autoFocus" :class="{
         'allow-zoom': config?.animation?.zoom,
         'allow-grayscale': config?.animation?.grayscale,
-      }" :style="{
-        minHeight: config.style?.minHeight,
-        height:
-          config.style?.height && config.scroll !== false
-            ? config.style.height
-            : 'auto',
-      }" @focus="focusHandler" @blur="blurHandler" @mouseover="editorOnMouseoverHandler" />
+      }" :style="editorStyle" @focus="focusHandler" @blur="blurHandler" @mouseover="editorOnMouseoverHandler" />
   </Slate>
   <span class="se-count">
     <i :class="{ 'se-weight': editorLeftLength <= 0 }">{{ editorLength }}</i>
@@ -87,7 +81,18 @@ const emit = defineEmits<{
 const editorTextAreaRef = useTemplateRef('editor-text-area');
 const editorLength = ref(0);
 const editorLeftLength = ref(Infinity);
-const editorService = new EditorService(config.storageName, config.html);
+const editorStyle = {
+  ...config.style,
+  maxHeight:
+    config.style?.maxHeight && config.scroll !== false
+      ? config.style.maxHeight
+      : undefined,
+  height:
+    config.style?.height && config.scroll !== false
+      ? config.style.height
+      : 'auto',
+}
+const editorService = new EditorService(config.databaseName, config.html);
 
 const htmlSerializers =
   config.modules
