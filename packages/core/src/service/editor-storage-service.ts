@@ -1,9 +1,9 @@
 import { Storage } from '@ssml-editor/modules';
 
 export class EditorStorageService {
-  constructor(storageName?: string, storeName?: string) {
-    if (storageName) {
-      const name = `${EditorStorageService.STORAGE_NAME_PREFIX}_${storageName}`;
+  constructor(databaseName?: string, storeName?: string) {
+    if (databaseName) {
+      const name = `${EditorStorageService.DATABASE_NAME_PREFIX}_${databaseName}`;
       this._storager = new Storage({
         name: name,
         storeName: storeName || EditorStorageService.STORE_NAME,
@@ -33,6 +33,6 @@ export class EditorStorageService {
     return await this._storager?.removeItem(key);
   }
 
-  static STORAGE_NAME_PREFIX = 'ssml_editor';
+  static DATABASE_NAME_PREFIX = 'ssml_editor';
   static STORE_NAME = 'editor';
 }
