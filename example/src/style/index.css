@@ -3,7 +3,6 @@
 @import 'tailwindcss/preflight.css' layer(base);
 @import 'tailwindcss/utilities.css' layer(utilities);
 
-@import '@ssml-editor/vue';
 @import '@ssml-editor/editor-vue/styles/highlight/github-dark-dimmed.css';
 @import '@ssml-editor/editor-vue';
 @import './theme.css';
