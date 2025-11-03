@@ -9,11 +9,11 @@ export class EditorService {
       if (
         editorHtmlConfig &&
         editorHtmlConfig.storageType === StorageType.LOCAL &&
-        editorHtmlConfig.storageName
+        editorHtmlConfig.storeName
       ) {
         this._editorStorageService = new EditorStorageService(
           databaseName,
-          editorHtmlConfig.storageName,
+          editorHtmlConfig.storeName,
         );
       }
     }
