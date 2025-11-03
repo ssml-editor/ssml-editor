@@ -3,16 +3,16 @@ import type { EditorHtmlConfig } from '@/model';
 import { EditorStorageService } from './editor-storage-service';
 
 export class EditorService {
-  constructor(editorStorageName?: string, editorHtmlConfig?: EditorHtmlConfig) {
+  constructor(databaseName?: string, editorHtmlConfig?: EditorHtmlConfig) {
     this._editorHtmlConfig = editorHtmlConfig;
-    if (editorStorageName) {
+    if (databaseName) {
       if (
         editorHtmlConfig &&
         editorHtmlConfig.storageType === StorageType.LOCAL &&
         editorHtmlConfig.storageName
       ) {
         this._editorStorageService = new EditorStorageService(
-          editorStorageName,
+          databaseName,
           editorHtmlConfig.storageName,
         );
       }
