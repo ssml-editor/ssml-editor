@@ -75,7 +75,7 @@ const {
   fetchBgms = () => Promise.resolve([]),
 } = defineProps<SpeakProps & { config?: EditorConfig }>();
 const emit = defineEmits<{ submit: [data: SpeakContentDataModal] }>();
-const editorStorageService = new EditorStorageService(config?.storageName);
+const editorStorageService = new EditorStorageService(config?.databaseName);
 
 function usageRecordsItemClickHandler(item: SpeakContentDataModal) {
   speakContentData.value.rate = item.rate;

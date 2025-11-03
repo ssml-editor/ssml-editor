@@ -8,7 +8,7 @@ import { type BaseEditor, type EditorConfig, Button } from '@ssml-editor/vue';
 import { ElMessage } from 'element-plus';
 
 const { config, editor } = defineProps<{ config?: EditorConfig, editor?: BaseEditor }>()
-const editorService = config ? new EditorService(config.storageName, config.html) : undefined;
+const editorService = config ? new EditorService(config.databaseName, config.html) : undefined;
 
 async function saveHandler() {
   try {

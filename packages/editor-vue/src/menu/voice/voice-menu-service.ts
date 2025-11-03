@@ -11,7 +11,7 @@ export class VoiceMenuService extends MenuBaseService {
 
   constructor(editor: BaseEditor, config: EditorConfig) {
     super(editor);
-    this._editorStorageService = new EditorStorageService(config.storageName);
+    this._editorStorageService = new EditorStorageService(config.databaseName);
   }
 
   async fetchConfig(): Promise<VoiceContentDataModel | undefined> {
