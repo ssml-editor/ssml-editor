@@ -23,8 +23,8 @@ export const DefaultEditorConfig: Readonly<EditorConfig> = {
     autoSaveWait: 5000,
   },
   style: {
-    height: '400px',
-    minHeight: '400px',
+    minHeight: '300px',
+    maxHeight: '500px',
   },
   toolbar: {
     menus: [],
