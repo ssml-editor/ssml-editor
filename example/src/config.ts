@@ -57,14 +57,14 @@ const sayAsValidateMethod: ValidateMethod = (text, defaultValidateMethod) =>
   defaultValidateMethod(text);
 
 export default <EditorConfig>{
-  storageName: 'abcdefg',
+  databaseName: 'abcdefg',
   scroll: true,
   placeholder: '请输入内容...',
   maxLength: 10,
   animation: { grayscale: true, zoom: true },
   html: {
     storageType: StorageType.LOCAL,
-    storageName: '001',
+    storeName: '001',
   },
   toolbar: {
     menus: [
