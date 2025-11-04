@@ -1,10 +1,10 @@
 {
   "name": "@ssml-editor/ssml-editor",
   "private": true,
-  "homepage": "https://github.com/zmkn/ssml-editor/",
+  "homepage": "https://github.com/ssml-editor/ssml-editor/",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/zmkn/ssml-editor.git"
+    "url": "git+https://github.com/ssml-editor/ssml-editor.git"
   },
   "license": "MIT",
   "author": "hz <beijingren@vip.qq.com>",
