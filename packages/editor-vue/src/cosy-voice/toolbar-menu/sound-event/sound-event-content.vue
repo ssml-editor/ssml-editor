@@ -79,8 +79,9 @@ function categoryValueChangeHandler() {
   });
 }
 
-async function fetchSoundList(): Promise<LabelValue[]> {
+async function fetchSoundList(page: number): Promise<LabelValue[]> {
   const sounds = await fetchSounds({
+    page,
     category: soundContentData.value.category,
   });
   return sounds.map((item) => ({

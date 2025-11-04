@@ -68,8 +68,9 @@ function categoryValueChangeHandler() {
   });
 }
 
-async function fetchVoiceList(): Promise<LabelValue[]> {
+async function fetchVoiceList(page: number): Promise<LabelValue[]> {
   const voices = await fetchVoices({
+    page,
     category: voiceContentData.value.category,
   });
   return voices.map((item) => ({

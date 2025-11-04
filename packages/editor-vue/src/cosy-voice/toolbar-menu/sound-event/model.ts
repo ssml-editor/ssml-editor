@@ -4,6 +4,7 @@ export interface Sound {
 }
 
 export interface FetchSoundParams {
+  page: number,
   category?: string;
 }
 

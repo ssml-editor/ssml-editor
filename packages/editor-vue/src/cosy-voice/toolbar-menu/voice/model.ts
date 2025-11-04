@@ -4,6 +4,7 @@ export interface ResponseVoice {
 }
 
 export interface FetchVoiceParams {
+  page: number,
   category?: string;
 }
 
