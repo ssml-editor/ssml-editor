@@ -1,4 +1,4 @@
-import type { Effect } from '@/cosy-voice';
+import { Effect } from '@/cosy-voice';
 import type { LabelValue } from '@ssml-editor/core';
 
 export function generateSpeakUsageRecordLabel(
@@ -27,24 +27,29 @@ export function generateSpeakUsageRecordLabel(
       break;
     }
   }
-  const part: string[] = [];
-  part.push(rateName);
-  part.push(pitchName);
-  part.push(volume.toString());
+  const parts: string[] = [];
+  parts.push(rateName);
+  parts.push(pitchName);
+  parts.push(volume.toString());
   if (effect) {
-    part.push(effect);
-  }
-  if (effectValue) {
-    part.push(effectValue);
+    parts.push(effect.toString());
+    if (
+      (effect === Effect.EQ ||
+        effect === Effect.LPFILTER ||
+        effect === Effect.HPFILTER) &&
+      effectValue
+    ) {
+      parts.push(effectValue);
+    }
   }
   if (bgm) {
     for (const b of dataListBgm) {
       if (b.value === bgm) {
-        part.push(b.label);
+        parts.push(b.label);
         break;
       }
     }
   }
-  part.push(bgmVolume.toString());
-  return part.join('-');
+  parts.push(bgmVolume.toString());
+  return parts.join('-');
 }

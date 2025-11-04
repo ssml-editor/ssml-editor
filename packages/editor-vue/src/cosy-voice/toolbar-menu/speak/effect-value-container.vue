@@ -9,33 +9,48 @@
 </template>
 
 <script setup lang="ts">
-import { onMounted, ref } from 'vue';
+import { Effect } from '@/cosy-voice';
+import { onMounted, ref, watch } from 'vue';
 import EffectEq from './effect-eq.vue';
 import EffectFilter from './effect-filter.vue';
 
-const model = defineModel<string>({ default: '' })
-const { effect = '' } = defineProps<{ effect?: string; }>()
+const model = defineModel<string | undefined>()
+const { effect } = defineProps<{ effect?: Effect; }>()
 const eqValue = ref("0 0 0 0 0 0 0 0")
 const lpFilterValue = ref("6000")
 const hpFilterValue = ref("12000")
 
 function updateHandler() {
-  if (effect === 'eq') {
+  if (effect === Effect.EQ) {
     model.value = eqValue.value
-  } else if (effect === 'lpfilter') {
+  } else if (effect === Effect.LPFILTER) {
     model.value = lpFilterValue.value
-  } else if (effect === 'hpfilter') {
+  } else if (effect === Effect.HPFILTER) {
     model.value = hpFilterValue.value
   }
 }
 
+watch(() => effect, (newValue) => {
+  if (newValue === Effect.EQ) {
+    model.value = eqValue.value
+  } else if (newValue === Effect.LPFILTER) {
+    model.value = lpFilterValue.value
+  } else if (newValue === Effect.HPFILTER) {
+    model.value = hpFilterValue.value
+  } else {
+    model.value = undefined
+  }
+})
+
 onMounted(async () => {
-  if (effect === 'eq') {
-    eqValue.value = model.value
-  } else if (effect === 'lpfilter') {
-    lpFilterValue.value = model.value
-  } else if (effect === 'hpfilter') {
-    hpFilterValue.value = model.value
+  if (model.value) {
+    if (effect === 'eq') {
+      eqValue.value = model.value
+    } else if (effect === 'lpfilter') {
+      lpFilterValue.value = model.value
+    } else if (effect === 'hpfilter') {
+      hpFilterValue.value = model.value
+    }
   }
 })
 </script>
