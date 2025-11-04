@@ -47,23 +47,23 @@
     "@ssml-editor/utils": "*",
     "@types/lodash": "^4.17.20",
     "lodash": "^4.17.21",
-    "slate-vue3": "^0.8.2"
+    "slate-vue3": "^0.9.0"
   },
   "devDependencies": {
-    "@tailwindcss/vite": "^4.1.15",
-    "@types/node": "^22.18.12",
+    "@tailwindcss/vite": "^4.1.16",
+    "@types/node": "^24.10.0",
     "@vitejs/plugin-vue": "^6.0.1",
     "@vitejs/plugin-vue-jsx": "^5.1.1",
     "npm-run-all": "^4.1.5",
     "postcss": "^8.5.6",
     "postcss-nested": "^7.0.2",
-    "rimraf": "^6.0.1",
+    "rimraf": "^6.1.0",
     "tailwind-scrollbar": "^4.0.2",
-    "tailwindcss": "^4.1.15",
+    "tailwindcss": "^4.1.16",
     "typescript": "^5.9.3",
-    "vite": "^7.1.11",
+    "vite": "^7.1.12",
     "vite-plugin-dts": "^4.5.4",
     "vue": "^3.5.22",
-    "vue-tsc": "^3.1.1"
+    "vue-tsc": "^3.1.3"
   }
 }
