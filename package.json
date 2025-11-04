@@ -23,8 +23,8 @@
     "node": ">=22.12.0"
   },
   "scripts": {
-    "start": "npm run dev",
-    "dev": "npm run dev --workspace=@ssml-editor/example",
+    "start": "run-s dev:example",
+    "dev:example": "npm run dev --workspace=@ssml-editor/example",
     "build:all": "run-s build:base build:utils build:modules build:core build:vue build:editor-vue build:example",
     "build:vue": "npm run build --workspace=@ssml-editor/vue",
     "build:core": "npm run build --workspace=@ssml-editor/core",
