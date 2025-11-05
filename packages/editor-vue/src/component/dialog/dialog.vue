@@ -1,8 +1,8 @@
 <template>
   <el-dialog v-model="model" :modal="modal" :title="title" :width="width" :align-center="alignCenter"
-    :show-close="showClose" :destroy-on-close="destroyOnClose" draggable @open="openHandler" @opened="openedHandler"
-    @close="closeHandler" @closed="closedHandler" @open-auto-focus="openAutoFocusHandler"
-    @close-auto-focus="closeAutoFocusHandler">
+    :show-close="showClose" :append-to-body="appendToBody" :destroy-on-close="destroyOnClose" draggable
+    @open="openHandler" @opened="openedHandler" @close="closeHandler" @closed="closedHandler"
+    @open-auto-focus="openAutoFocusHandler" @close-auto-focus="closeAutoFocusHandler">
     <slot></slot>
     <template #header>
       <slot name="header"></slot>
@@ -26,6 +26,7 @@ const {
   showClose = true,
   showFooter = true,
   alignCenter = false,
+  appendToBody = false,
   destroyOnClose = false,
 } = defineProps<{
   modal?: boolean;
@@ -34,6 +35,7 @@ const {
   showClose?: boolean;
   showFooter?: boolean;
   alignCenter?: boolean;
+  appendToBody?: boolean;
   destroyOnClose?: boolean;
 }>();
 const emit = defineEmits<{
