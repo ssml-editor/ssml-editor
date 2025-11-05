@@ -1,6 +1,6 @@
 <template>
   <Button icon-class="iconfont-ssml-editor icon-ssml-editor-code" @click="menuClickHandler">SSML</Button>
-  <Dialog title="查看SSML" width="80%" :alignCenter="true" :destroyOnClose="true" v-model="dialogVisible">
+  <Dialog title="查看SSML" width="80%" :align-center="true" :destroy-on-close="true" v-model="dialogVisible">
     <div class="se-code-wrapper">
       <highlightjs language="xml" :code="code" />
     </div>

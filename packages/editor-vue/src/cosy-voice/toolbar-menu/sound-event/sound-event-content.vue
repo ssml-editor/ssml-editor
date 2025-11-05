@@ -8,16 +8,16 @@
       </el-input>
     </el-form>
     <div class="se-sound-event-content-search-result" v-if="showSearchResult">
-      <select-list v-model="searchSound" :dataList="searchResult"></select-list>
+      <select-list v-model="searchSound" :data-list="searchResult"></select-list>
     </div>
   </div>
   <div class="se-sound-event-content-body" :style="{ display: showSearchResult ? 'none' : 'flex' }">
     <list-wrapper title="类型">
-      <infinite-scroll v-model="soundContentData.category" :pageSize="categoryPageSize" :load="fetchCategories"
-        @update:modelValue="categoryValueChangeHandler" @change="categoryChangeHandler"></infinite-scroll>
+      <infinite-scroll v-model="soundContentData.category" :page-size="categoryPageSize" :load="fetchCategories"
+        @update:model-value="categoryValueChangeHandler" @change="categoryChangeHandler"></infinite-scroll>
     </list-wrapper>
     <list-wrapper title="声音">
-      <infinite-scroll v-if="showSoundList" v-model="soundContentData.sound" :pageSize="soundPageSize"
+      <infinite-scroll v-if="showSoundList" v-model="soundContentData.sound" :page-size="soundPageSize"
         :load="fetchSoundList" @change="soundChangeHandler"></infinite-scroll>
     </list-wrapper>
   </div>

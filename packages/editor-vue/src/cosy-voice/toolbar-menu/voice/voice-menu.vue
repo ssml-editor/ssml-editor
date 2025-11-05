@@ -1,7 +1,7 @@
 <template>
   <Button ref="menu-bar-button" icon-class="iconfont-ssml-editor icon-ssml-editor-duoren"
     @click="menuClickHandler">音色</Button>
-  <Dialog title="音色" width="calc(var(--el-dialog-padding-primary) * 2 + 12.5rem)" :destroyOnClose="true"
+  <Dialog title="音色" width="calc(var(--el-dialog-padding-primary) * 2 + 12.5rem)" :destroy-on-close="true"
     v-model="dialogVisible" :style="{ margin: margin }" @submit="submitHandler">
     <voice-content ref="voice-content" v-model="voiceContentData" v-bind="props"></voice-content>
   </Dialog>

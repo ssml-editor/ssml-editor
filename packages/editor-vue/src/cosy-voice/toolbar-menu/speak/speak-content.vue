@@ -14,23 +14,23 @@
     </div>
     <div class="se-speak-content-body" v-show="!showAllUsageRecord">
       <list-wrapper title="语速">
-        <select-list v-model="speakContentData.rate" :dataList="dataListRate"></select-list>
+        <select-list v-model="speakContentData.rate" :data-list="dataListRate"></select-list>
       </list-wrapper>
       <list-wrapper title="语调">
-        <select-list v-model="speakContentData.pitch" :dataList="dataListPitch"></select-list>
+        <select-list v-model="speakContentData.pitch" :data-list="dataListPitch"></select-list>
       </list-wrapper>
       <list-wrapper title="音量" style="width: 5rem">
         <volume-container v-model="speakContentData.volume"></volume-container>
       </list-wrapper>
       <list-wrapper title="音效">
-        <select-list v-model="speakContentData.effect" :dataList="dataListEffect"></select-list>
+        <select-list v-model="speakContentData.effect" :data-list="dataListEffect"></select-list>
       </list-wrapper>
       <list-wrapper title="音效效果" style="width: 7.5rem">
         <effect-value-container v-model="speakContentData.effectValue"
           :effect="speakContentData.effect"></effect-value-container>
       </list-wrapper>
       <list-wrapper title="背景" style="width: 7.5rem">
-        <infinite-scroll v-model="speakContentData.bgm" :pageSize="10" :load="fetchBgms"></infinite-scroll>
+        <infinite-scroll v-model="speakContentData.bgm" :page-size="10" :load="fetchBgms"></infinite-scroll>
       </list-wrapper>
       <list-wrapper title="背景音量" style="width: 5rem">
         <volume-container v-model="speakContentData.bgmVolume"></volume-container>

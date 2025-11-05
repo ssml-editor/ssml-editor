@@ -1,8 +1,8 @@
 <template>
   <Button ref="menu-bar-button" icon-class="iconfont-ssml-editor icon-ssml-editor-speaker"
     @click="menuClickHandler">属性</Button>
-  <Dialog title="属性" width="calc(var(--el-dialog-padding-primary) * 2 + 43.75rem)" :destroyOnClose="true"
-    :showFooter="false" v-model="dialogVisible" :style="{ margin: margin }">
+  <Dialog title="属性" width="calc(var(--el-dialog-padding-primary) * 2 + 43.75rem)" :destroy-on-close="true"
+    :show-footer="false" v-model="dialogVisible" :style="{ margin: margin }">
     <speak-content v-model="speakContentData" v-bind="props" @submit="submitHandler"></speak-content>
   </Dialog>
 </template>
