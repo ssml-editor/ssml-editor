@@ -1,30 +1,34 @@
 <template>
-  <div class="se-infinite-scroll">
-    <ul ref="infinite-scroll-ul" v-infinite-scroll="scrollLoad" :class="{ 'se-empty': dataList.length === 0 }"
-      :infinite-scroll-disabled="disabled" :infinite-scroll-distance="1" :infinite-scroll-delay="200">
-      <li :class="{ activated: item.value === model }" v-if="dataList.length > 0" v-for="(item, index) in dataList"
-        :key="index" @click="selectHandler(item)">
-        {{ item.label }}
-      </li>
-      <li class="se-blank" v-else>
-        <Blank :type="BlankType.LIST" />
-      </li>
-    </ul>
-    <div class="se-loading" v-if="loadingShowed">Loading...</div>
-    <div class="se-no-more" v-if="dataList.length > 0 && showNoMore && noMoreShowed">- No more -</div>
+  <div class="se-infinite-scrollbar">
+    <el-scrollbar ref="scrollbar" native wrap-class="se-scrollbar-wrap" :distance="1" @end-reached="scrollLoad"
+      v-if="dataList.length > 0">
+      <slot :model="model" :dataList="dataList">
+        <p class="se-item" :class="{ activated: item.value === model }" v-for="(item, index) in dataList" :key="index"
+          @click="selectHandler(item)">
+          {{ item.label }}
+        </p>
+      </slot>
+      <div class="se-loading" v-if="loadingShowed">Loading...</div>
+      <div class="se-no-more" v-if="dataList.length > 0 && showNoMore && noMoreShowed">
+        - No more -
+      </div>
+    </el-scrollbar>
+    <div class="se-blank" v-else>
+      <Blank :type="BlankType.LIST" />
+    </div>
   </div>
 </template>
 
 <script setup lang="ts">
 import { type LabelValue } from '@ssml-editor/core';
 import { Blank, BlankType } from '@ssml-editor/vue';
-import { ElInfiniteScroll as vInfiniteScroll } from 'element-plus';
-import { computed, ref, toRaw, useTemplateRef, watch } from 'vue';
+import { ElScrollbar, type ScrollbarDirection } from 'element-plus';
+import { nextTick, onMounted, ref, toRaw, useTemplateRef, watch } from 'vue';
 
-const infiniteScrollUlRef = useTemplateRef('infinite-scroll-ul');
-const model = defineModel<string | number | undefined>({ default: undefined });
+const scrollbarRef = useTemplateRef('scrollbar');
+const model = defineModel<string | number | undefined>();
 const {
-  pageSize = undefined,
+  pageSize,
   showNoMore = false,
   load = () => [],
 } = defineProps<{
@@ -35,27 +39,30 @@ const {
 const emit = defineEmits<{ change: [dataList: LabelValue[]] }>();
 const loadingShowed = ref(false);
 const noMoreShowed = ref(false);
-const disabled = computed(() => loadingShowed.value || noMoreShowed.value);
 const dataList = ref<LabelValue[]>([]);
 const page = ref(1);
 
-async function scrollLoad() {
-  loadingShowed.value = true;
-  const result = await load(page.value);
-  loadingShowed.value = false;
-  if (result.length > 0) {
-    dataList.value = [...dataList.value, ...result];
-    if (pageSize && pageSize > 0) {
-      if (result.length < pageSize) {
-        noMoreShowed.value = true;
+async function scrollLoad(direction: ScrollbarDirection) {
+  if (direction === 'bottom') {
+    if (!loadingShowed.value && !noMoreShowed.value) {
+      loadingShowed.value = true;
+      const result = await load(page.value);
+      loadingShowed.value = false;
+      if (result.length > 0) {
+        dataList.value = [...dataList.value, ...result];
+        if (pageSize && pageSize > 0) {
+          if (result.length < pageSize) {
+            noMoreShowed.value = true;
+          } else {
+            page.value += 1;
+          }
+        } else {
+          page.value += 1;
+        }
       } else {
-        page.value += 1;
+        noMoreShowed.value = true;
       }
-    } else {
-      page.value += 1;
     }
-  } else {
-    noMoreShowed.value = true;
   }
 }
 
@@ -64,27 +71,38 @@ function selectHandler(item: LabelValue) {
 }
 
 function scrollIntoView() {
-  if (infiniteScrollUlRef.value) {
+  if (scrollbarRef.value && dataList.value.length > 0) {
     for (let i = 0; i < dataList.value.length; i++) {
       if (dataList.value[i].value === model.value) {
-        infiniteScrollUlRef.value.children[i]?.scrollIntoView({
-          behavior: 'smooth',
-        });
+        if (scrollbarRef.value.wrapRef && scrollbarRef.value.wrapRef.children.length > 0) {
+          const wrapElement = scrollbarRef.value.wrapRef.children[0];
+          const elements = wrapElement.children
+          scrollbarRef.value.scrollTo({
+            top: elements[i].getBoundingClientRect().top - wrapElement.getBoundingClientRect().top,
+          });
+        }
         return;
       }
     }
   }
 }
 
-watch(dataList, (newValue) => {
-  emit('change', toRaw(newValue));
-}, {
-  deep: true,
-  immediate: true
-});
+watch(
+  dataList,
+  (newValue) => {
+    emit('change', toRaw(newValue));
+  },
+  {
+    deep: true,
+    immediate: true,
+  },
+);
 
-defineExpose({
-  scrollIntoView: scrollIntoView,
+onMounted(async () => {
+  await scrollLoad('bottom');
+  nextTick(() => {
+    scrollIntoView();
+  });
 });
 </script>
 
@@ -95,29 +113,25 @@ defineExpose({
   nocompatible: true;
 }
 
-.se-infinite-scroll {
-  ul {
-    &.se-empty {
-      @apply w-full h-full;
+.se-infinite-scrollbar {
+  :deep(.se-scrollbar-wrap) {
+    @apply scrollbar-thin;
+  }
+
+  .se-item {
+    &.activated {
+      @apply text-blue-500;
     }
 
-    li {
-      &.activated {
-        @apply text-blue-500;
-      }
-
-      &:not(.se-blank):hover {
-        @apply bg-(--color-li-hover-bg);
-      }
-
-      &.se-blank {
-        @apply w-full h-full pt-[0] pb-[0] flex flex-col justify-center items-center cursor-default;
-      }
-
-      @apply text-xs pt-1 pb-1 cursor-pointer;
+    &:hover {
+      @apply bg-(--color-li-hover-bg);
     }
 
-    @apply list-none m-0 p-0 overflow-hidden;
+    @apply text-xs m-[0] pt-1 pb-1 cursor-pointer;
+  }
+
+  .se-blank {
+    @apply w-full h-full pt-[0] pb-[0] flex flex-col justify-center items-center;
   }
 
   .se-loading {
@@ -128,6 +142,6 @@ defineExpose({
     @apply text-gray-300 text-(length:--text-xxs) leading-(--text-xxs--line-height);
   }
 
-  @apply box-border border border-(--el-border-color) border-solid text-center h-50 overflow-x-hidden overflow-y-auto;
+  @apply box-border border border-(--el-border-color) border-solid text-center h-50;
 }
 </style>
