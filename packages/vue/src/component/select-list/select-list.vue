@@ -1,21 +1,23 @@
 <template>
-  <div class="se-select-list">
-    <ul ref="select-list-ul" v-if="dataList.length > 0">
-      <li :class="{ activated: item.value === model }" v-for="(item, index) in dataList" :key="index"
+  <div ref="select-list-div" class="se-select-list">
+    <slot :model="model" :dataList="dataList" v-if="dataList.length > 0">
+      <p class="se-item" :class="{ activated: item.value === model }" v-for="(item, index) in dataList" :key="index"
         @click="selectHandler(item)">
         {{ item.label }}
-      </li>
-    </ul>
-    <Blank :type="BlankType.LIST" v-else />
+      </p>
+    </slot>
+    <div class="se-blank" v-else>
+      <Blank :type="BlankType.LIST" />
+    </div>
   </div>
 </template>
 
 <script setup lang="ts">
 import { Blank, BlankType } from '@/component';
 import type { LabelValue } from '@ssml-editor/core';
-import { useTemplateRef } from 'vue';
+import { nextTick, onMounted, useTemplateRef } from 'vue';
 
-const selectListUlRef = useTemplateRef('select-list-ul');
+const selectListDivRef = useTemplateRef('select-list-div');
 const model = defineModel<string | number | undefined>({ default: undefined });
 const { dataList = [] } = defineProps<{ dataList?: LabelValue[] }>();
 
@@ -24,10 +26,10 @@ function selectHandler(item: LabelValue) {
 }
 
 function scrollIntoView() {
-  if (selectListUlRef.value) {
+  if (selectListDivRef.value && dataList.length > 0) {
     for (let i = 0; i < dataList.length; i++) {
       if (dataList[i].value === model.value) {
-        selectListUlRef.value.children[i]?.scrollIntoView({
+        selectListDivRef.value.children[i]?.scrollIntoView({
           behavior: 'smooth',
         });
         return;
@@ -36,8 +38,10 @@ function scrollIntoView() {
   }
 }
 
-defineExpose({
-  scrollIntoView: scrollIntoView,
+onMounted(() => {
+  nextTick(() => {
+    scrollIntoView();
+  });
 });
 </script>
 
@@ -49,22 +53,22 @@ defineExpose({
 }
 
 .se-select-list {
-  ul {
-    li {
-      &.activated {
-        @apply text-blue-500;
-      }
-
-      &:hover {
-        @apply bg-(--color-li-hover-bg);
-      }
-
-      @apply text-xs pt-1 pb-1 cursor-pointer;
+  .se-item {
+    &.activated {
+      @apply text-blue-500;
     }
 
-    @apply w-full h-full list-none m-0 p-0 overflow-x-hidden overflow-y-auto scrollbar-thin;
+    &:hover {
+      @apply bg-(--color-li-hover-bg);
+    }
+
+    @apply text-xs m-[0] pt-1 pb-1 cursor-pointer;
   }
 
-  @apply flex flex-col justify-center items-center box-border border border-(--el-border-color) border-solid text-center h-50 overflow-hidden;
+  .se-blank {
+    @apply w-full h-full flex flex-col justify-center items-center;
+  }
+
+  @apply box-border border border-(--el-border-color) border-solid text-center h-50 overflow-x-hidden overflow-y-auto scrollbar-thin;
 }
 </style>
