@@ -74,11 +74,16 @@ function scrollIntoView() {
   if (scrollbarRef.value && dataList.value.length > 0) {
     for (let i = 0; i < dataList.value.length; i++) {
       if (dataList.value[i].value === model.value) {
-        if (scrollbarRef.value.wrapRef && scrollbarRef.value.wrapRef.children.length > 0) {
+        if (
+          scrollbarRef.value.wrapRef &&
+          scrollbarRef.value.wrapRef.children.length > 0
+        ) {
           const wrapElement = scrollbarRef.value.wrapRef.children[0];
-          const elements = wrapElement.children
+          const elements = wrapElement.children;
           scrollbarRef.value.scrollTo({
-            top: elements[i].getBoundingClientRect().top - wrapElement.getBoundingClientRect().top,
+            top:
+              elements[i].getBoundingClientRect().top -
+              wrapElement.getBoundingClientRect().top,
           });
         }
         return;
@@ -131,7 +136,7 @@ onMounted(async () => {
   }
 
   .se-blank {
-    @apply w-full h-full pt-[0] pb-[0] flex flex-col justify-center items-center;
+    @apply w-full h-full flex flex-col justify-center items-center;
   }
 
   .se-loading {
