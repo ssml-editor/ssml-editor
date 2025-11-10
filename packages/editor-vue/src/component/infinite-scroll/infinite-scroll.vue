@@ -3,8 +3,8 @@
     <el-scrollbar ref="scrollbar" native wrap-class="se-scrollbar-wrap" :distance="1" @end-reached="scrollLoad"
       v-if="dataList.length > 0">
       <slot :model="model" :dataList="dataList">
-        <p class="se-item" :class="{ activated: item.value === model }" v-for="(item, index) in dataList" :key="index"
-          @click="selectHandler(item)">
+        <p class="se-item" :class="{ activated: item.value === model }" :title="item.label"
+          v-for="(item, index) in dataList" :key="index" @click="selectHandler(item)">
           {{ item.label }}
         </p>
       </slot>
@@ -34,12 +34,13 @@ const {
 } = defineProps<{
   pageSize?: number;
   showNoMore?: boolean;
-  load: (page: number) => LabelValue[] | Promise<LabelValue[]>;
+  load: (page: number) => (LabelValue & Record<string, any>)[] | Promise<(LabelValue & Record<string, any>)[]>;
 }>();
-const emit = defineEmits<{ change: [dataList: LabelValue[]] }>();
+const emit = defineEmits<{ change: [dataList: (LabelValue & Record<string, any>)[]] }>();
 const loadingShowed = ref(false);
 const noMoreShowed = ref(false);
-const dataList = ref<LabelValue[]>([]);
+const selectedItem = ref<LabelValue & Record<string, any>>();
+const dataList = ref<(LabelValue & Record<string, any>)[]>([]);
 const page = ref(1);
 
 async function scrollLoad(direction: ScrollbarDirection) {
@@ -66,7 +67,8 @@ async function scrollLoad(direction: ScrollbarDirection) {
   }
 }
 
-function selectHandler(item: LabelValue) {
+function selectHandler(item: LabelValue & Record<string, any>) {
+  selectedItem.value = item;
   model.value = item.value;
 }
 
@@ -92,6 +94,10 @@ function scrollIntoView() {
   }
 }
 
+function getSelectedItem(): (LabelValue & Record<string, any>) | undefined {
+  return selectedItem.value;
+}
+
 watch(
   dataList,
   (newValue) => {
@@ -108,6 +114,10 @@ onMounted(async () => {
   nextTick(() => {
     scrollIntoView();
   });
+});
+
+defineExpose({
+  getSelectedItem,
 });
 </script>
 
@@ -132,7 +142,7 @@ onMounted(async () => {
       @apply bg-(--color-li-hover-bg);
     }
 
-    @apply text-xs m-[0] pt-1 pb-1 cursor-pointer;
+    @apply text-xs m-[0] pt-1 pb-1 pl-1 pr-1 cursor-pointer overflow-hidden whitespace-nowrap text-ellipsis;
   }
 
   .se-blank {
