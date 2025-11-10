@@ -8,7 +8,15 @@
       </el-input>
     </el-form>
     <div class="se-sound-event-content-search-result" v-if="showSearchResult">
-      <select-list v-model="searchSound" :data-list="searchResult"></select-list>
+      <select-list v-model="searchSound" :data-list="searchSoundDataList">
+        <template #default="{ model, dataList }">
+          <p class="se-sound-item" :class="{ activated: item.value === model }" :title="item.label"
+            v-for="(item, index) in dataList" :key="index" @click="searchSoundSelectHandler(item)">
+            <Player :src="item.value!.toString()"></Player>
+            <span class="se-text">{{ item.label }}</span>
+          </p>
+        </template>
+      </select-list>
     </div>
   </div>
   <div class="se-sound-event-content-body" :style="{ display: showSearchResult ? 'none' : 'flex' }">
@@ -18,13 +26,21 @@
     </list-wrapper>
     <list-wrapper title="声音">
       <infinite-scroll v-if="showSoundList" v-model="soundContentData.sound" :page-size="soundPageSize"
-        :load="fetchSoundList" @change="soundChangeHandler"></infinite-scroll>
+        :load="fetchSoundList" @change="soundChangeHandler">
+        <template #default="{ model, dataList }">
+          <p class="se-sound-item" :class="{ activated: item.value === model }" :title="item.label"
+            v-for="(item, index) in dataList" :key="index" @click="soundSelectHandler(item)">
+            <Player :src="item.value!.toString()"></Player>
+            <span class="se-text">{{ item.label }}</span>
+          </p>
+        </template>
+      </infinite-scroll>
     </list-wrapper>
   </div>
 </template>
 
 <script setup lang="ts">
-import { InfiniteScroll } from '@/component';
+import { InfiniteScroll, Player } from '@/component';
 import { Search } from '@element-plus/icons-vue';
 import type { LabelValue } from '@ssml-editor/core';
 import { ListWrapper, SelectList } from '@ssml-editor/vue';
@@ -39,7 +55,7 @@ const showSoundList = ref(false);
 const searchInput = ref('');
 const categoryDataList = ref<LabelValue[]>([]);
 const soundDataList = ref<LabelValue[]>([]);
-const searchResult = ref<LabelValue[]>([]);
+const searchSoundDataList = ref<LabelValue[]>([]);
 const searchSound = ref<string>();
 const soundContentData = defineModel<SoundContentDataModel>({
   default: new SoundContentData(),
@@ -66,7 +82,7 @@ function generateMark(
 function searchInputHandler(value: string) {
   if (value.trim() === '') {
     showSearchResult.value = false;
-    searchResult.value = [];
+    searchSoundDataList.value = [];
   } else {
     showSearchResult.value = true;
   }
@@ -94,7 +110,14 @@ async function categoryChangeHandler(categoryData: LabelValue[]) {
   showSoundList.value = false;
   if (categoryData.length > 0) {
     categoryDataList.value = categoryData;
-    soundContentData.value.category = categoryData[0].value as string;
+    if (
+      !soundContentData.value.category ||
+      !categoryData.some(
+        (item) => item.value === soundContentData.value.category,
+      )
+    ) {
+      soundContentData.value.category = categoryData[0].value as string;
+    }
     nextTick(() => {
       showSoundList.value = true;
     });
@@ -104,18 +127,23 @@ async function categoryChangeHandler(categoryData: LabelValue[]) {
 async function soundChangeHandler(soundData: LabelValue[]) {
   if (soundData.length > 0) {
     soundDataList.value = soundData;
-    soundContentData.value.sound = soundData[0].value as string;
+    if (
+      !soundContentData.value.sound ||
+      !soundData.some((item) => item.value === soundContentData.value.sound)
+    ) {
+      soundContentData.value.sound = soundData[0].value as string;
+    }
   }
 }
 
 async function searchSubmitHandler() {
   searchSound.value = undefined;
-  searchResult.value = [];
+  searchSoundDataList.value = [];
   const sounds = await searchSounds({
     word: searchInput.value,
   });
   if (sounds.length > 0) {
-    searchResult.value = sounds.map((item) => ({
+    searchSoundDataList.value = sounds.map((item) => ({
       label: item.name,
       value: item.src,
     }));
@@ -123,11 +151,19 @@ async function searchSubmitHandler() {
   }
 }
 
+function soundSelectHandler(item: LabelValue) {
+  soundContentData.value.sound = item.value as string;
+}
+
+function searchSoundSelectHandler(item: LabelValue) {
+  searchSound.value = item.value as string;
+}
+
 function getData(): SoundUsageDataModel {
   let mark: string | undefined = undefined;
   if (showSearchResult.value) {
     if (searchSound.value) {
-      mark = generateMark(searchSound.value, searchResult.value);
+      mark = generateMark(searchSound.value, searchSoundDataList.value);
     }
     return { sound: searchSound.value, mark };
   } else {
@@ -146,6 +182,27 @@ defineExpose({
 
 <style scoped>
 @reference "tailwindcss";
+
+.se-sound-item {
+  &.activated {
+    @apply text-blue-500;
+  }
+
+  &:hover {
+    @apply bg-(--color-li-hover-bg);
+  }
+
+  .se-text {
+    @apply text-xs text-start overflow-hidden whitespace-nowrap text-ellipsis min-w-[0] flex-1 ml-1;
+  }
+
+  :deep(.se-player-play),
+  :deep(.se-player-pause) {
+    @apply text-xs;
+  }
+
+  @apply m-[0] pt-1 pb-1 pl-1 pr-1 cursor-pointer flex justify-between items-center;
+}
 
 .se-sound-event-content-search {
   .se-sound-event-content-search-result {

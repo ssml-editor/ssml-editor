@@ -11,27 +11,6 @@ import {
 import type { VNode } from 'vue';
 import type { SoundEvent } from './model';
 
-function play(src: string) {
-  if (
-    !AudioPlayerSingleton.player ||
-    (AudioPlayerSingleton.player &&
-      AudioPlayerSingleton.player.options.src != src)
-  ) {
-    AudioPlayerSingleton.init({
-      src: src,
-    });
-  }
-  AudioPlayerSingleton.play();
-}
-
-function pause() {
-  AudioPlayerSingleton.pause();
-}
-
-function stop() {
-  AudioPlayerSingleton.stop();
-}
-
 export const soundEventRenderElement: EditorRenderElementMethod = ({
   element,
   children,
@@ -50,7 +29,7 @@ export const soundEventRenderElement: EditorRenderElementMethod = ({
           {
             onClick: (event: Event) => {
               event.stopPropagation();
-              stop();
+              AudioPlayerSingleton.stop().unload();
               EditorUtils.removeByNode(editor, node);
             },
           },
@@ -62,7 +41,7 @@ export const soundEventRenderElement: EditorRenderElementMethod = ({
           {
             onClick: (event: Event) => {
               event.stopPropagation();
-              play(node.src);
+              AudioPlayerSingleton.play({ src: node.src });
             },
           },
         ),
@@ -73,7 +52,7 @@ export const soundEventRenderElement: EditorRenderElementMethod = ({
           {
             onClick: (event: Event) => {
               event.stopPropagation();
-              pause();
+              AudioPlayerSingleton.pause();
             },
           },
         ),
