@@ -1,8 +1,11 @@
 import { markClickHandler } from '@/cosy-voice';
+import { AudioPlayerSingleton } from '@ssml-editor/modules';
 import {
   createParagraph,
   EditorUtils,
-  mark,
+  icon,
+  markText,
+  markWrapper,
   NodeUtils,
   text,
   wrapper,
@@ -34,24 +37,65 @@ export const speakRenderElement: EditorRenderElementMethod = ({
   editor,
 }: RenderElementProps): VNode => {
   const node = element as Speak;
+  const mark = node.bgmName
+    ? `${node.bgmName}-v${node.bgmVolume} | ${node.mark}`
+    : node.mark;
+  const iconNodes: VNode[] = [
+    icon(
+      null,
+      ['iconfont-ssml-editor', 'icon-ssml-editor-close-fill'],
+      undefined,
+      {
+        onClick: (event: Event) => {
+          event.stopPropagation();
+          AudioPlayerSingleton.stop().unload();
+          replaceNode(editor, node);
+        },
+      },
+    ),
+  ];
+  if (node.bgm) {
+    iconNodes.push(
+      icon(
+        null,
+        ['iconfont-ssml-editor', 'icon-ssml-editor-bofang'],
+        undefined,
+        {
+          onClick: (event: Event) => {
+            event.stopPropagation();
+            AudioPlayerSingleton.play({ src: node.bgm! });
+          },
+        },
+      ),
+    );
+    iconNodes.push(
+      icon(
+        null,
+        ['iconfont-ssml-editor', 'icon-ssml-editor-zanting'],
+        undefined,
+        {
+          onClick: (event: Event) => {
+            event.stopPropagation();
+            AudioPlayerSingleton.pause();
+          },
+        },
+      ),
+    );
+  }
   return wrapper(
     'div',
     attributes,
-    mark(
-      node.mark,
+    markWrapper(
+      iconNodes,
+      markText(mark),
       undefined,
-      { 'background-color': 'var(--cosy-voice-speak)' },
+      {
+        'background-color': 'var(--cosy-voice-speak)',
+      },
       {
         onClick: (event: Event) => {
           event.stopPropagation();
           markClickHandler(editor, node);
-        },
-      },
-      ['iconfont-ssml-editor', 'icon-ssml-editor-close-fill'],
-      {
-        onClick: (event: Event) => {
-          event.stopPropagation();
-          replaceNode(editor, node);
         },
       },
     ),

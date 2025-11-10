@@ -10,5 +10,6 @@ export interface Speak extends BaseElement {
   effect?: Effect;
   effectValue?: string;
   bgm?: string;
+  bgmName?: string;
   bgmVolume?: number;
 }

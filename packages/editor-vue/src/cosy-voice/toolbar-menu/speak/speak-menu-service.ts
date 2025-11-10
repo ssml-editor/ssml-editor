@@ -24,6 +24,7 @@ export class SpeakMenuService extends MenuBaseService {
         effect: speakNode.effect,
         effectValue: speakNode.effectValue,
         bgm: speakNode.bgm,
+        bgmName: speakNode.bgmName,
       };
     }
   }
@@ -43,6 +44,7 @@ export class SpeakMenuService extends MenuBaseService {
             effect: data.effect,
             effectValue: data.effectValue,
             bgm: data.bgm,
+            bgmName: data.bgmName,
             bgmVolume: data.bgmVolume,
             children: [],
           };

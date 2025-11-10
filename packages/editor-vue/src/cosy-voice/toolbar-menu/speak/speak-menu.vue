@@ -18,7 +18,7 @@ import { SpeakContentData } from './data'
 import { type SpeakContentDataModal } from './model'
 import SpeakContent from './speak-content.vue'
 import { SpeakMenuService } from './speak-menu-service'
-import type { SpeakProps } from './type'
+import type { BgmProps, SpeakProps } from './type'
 
 const menuBarButtonRef = useTemplateRef('menu-bar-button')
 const dialogVisible = ref(false)
@@ -26,7 +26,7 @@ const speakMenuService = shallowRef<SpeakMenuService>()
 const speakContentData = ref<SpeakContentDataModal>(new SpeakContentData())
 const { x, y, height } = useElementBounding(menuBarButtonRef as any)
 const margin: Ref<Property.Margin<string>> = ref('');
-const props = defineProps<SpeakProps & { editor?: BaseEditor, config?: EditorConfig }>()
+const props = defineProps<SpeakProps & BgmProps & { editor?: BaseEditor, config?: EditorConfig }>()
 
 function show() {
   margin.value = `${y.value + height.value}px 0 0 ${x.value}px`

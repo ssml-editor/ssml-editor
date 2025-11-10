@@ -7,7 +7,11 @@
         <li class="se-usage-record-list-name">近期使用:</li>
         <li v-for="(item, index) in speakUsageRecords" @click="usageRecordsItemClickHandler(item)" :key="index">
           <el-tag type="info" @close="deleteUsageRecordsHandler(item)" closable>
-            {{ item.label }}
+            {{
+              item.bgmName
+                ? `${item.bgmName}-v${item.bgmVolume} | ${item.label}`
+                : item.label
+            }}
           </el-tag>
         </li>
       </ul>
@@ -29,8 +33,10 @@
         <effect-value-container v-model="speakContentData.effectValue"
           :effect="speakContentData.effect"></effect-value-container>
       </list-wrapper>
-      <list-wrapper title="背景" style="width: 7.5rem">
-        <infinite-scroll v-model="speakContentData.bgm" :page-size="10" :load="fetchBgms"></infinite-scroll>
+      <list-wrapper title="背景音乐" style="width: 7.5rem">
+        <bgm-container ref="bgm-container" :music="speakContentData.bgm" :music-name="speakContentData.bgmName"
+          :bgm-category-page-size="bgmCategoryPageSize" :bgm-page-size="bgmPageSize" :fetch-bgms="fetchBgms"
+          :fetch-categories="fetchCategories" :search-bgms="searchBgms"></bgm-container>
       </list-wrapper>
       <list-wrapper title="背景音量" style="width: 5rem">
         <volume-container v-model="speakContentData.bgmVolume"></volume-container>
@@ -44,26 +50,26 @@
 </template>
 
 <script setup lang="ts">
-import { InfiniteScroll } from '@/component';
 import { More } from '@element-plus/icons-vue';
 import { EditorStorageService, type LabelValue } from '@ssml-editor/core';
 import { ListWrapper, SelectList, type EditorConfig } from '@ssml-editor/vue';
 import { ElButton, ElTag } from 'element-plus';
-import { onMounted, ref, toRaw } from 'vue';
+import { onMounted, ref, toRaw, useTemplateRef } from 'vue';
+import BgmContainer from './bgm-container.vue';
 import { SpeakContentData } from './data';
 import EffectValueContainer from './effect-value-container.vue';
 import { generateSpeakUsageRecordLabel } from './method';
 import { type SpeakContentDataModal } from './model';
-import type { SpeakProps } from './type';
+import type { BgmProps, SpeakProps } from './type';
 import VolumeContainer from './volume-container.vue';
 
 const storeKey = 'speak';
+const bgmContainerRef = useTemplateRef('bgm-container');
 const showAllUsageRecord = ref(false);
 const speakUsageRecords = ref<SpeakContentDataModal[]>([]);
 const dataListRate = ref<LabelValue[]>([]);
 const dataListPitch = ref<LabelValue[]>([]);
 const dataListEffect = ref<LabelValue[]>([]);
-const dataListBgm = ref<LabelValue[]>([]);
 const speakContentData = defineModel<SpeakContentDataModal>({
   default: new SpeakContentData(),
 });
@@ -71,9 +77,14 @@ const {
   rates,
   pitches,
   effects,
+  storedRecordCount = 40,
+  bgmPageSize,
+  bgmCategoryPageSize,
+  fetchBgms,
+  fetchCategories,
+  searchBgms,
   config,
-  fetchBgms = () => Promise.resolve([]),
-} = defineProps<SpeakProps & { config?: EditorConfig }>();
+} = defineProps<SpeakProps & BgmProps & { config?: EditorConfig }>();
 const emit = defineEmits<{ submit: [data: SpeakContentDataModal] }>();
 const editorStorageService = new EditorStorageService(config?.databaseName);
 
@@ -103,7 +114,7 @@ async function saveSpeakUsageRecords(
 ): Promise<boolean> {
   return await editorStorageService.save(
     storeKey,
-    speakContentDataList.slice(0, 40),
+    speakContentDataList.slice(0, storedRecordCount),
   );
 }
 
@@ -138,17 +149,17 @@ async function clearUsageRecordsHandler() {
 }
 
 async function submitHandler() {
+  const data = bgmContainerRef.value?.getData();
+  speakContentData.value.bgm = data?.music;
+  speakContentData.value.bgmName = data?.musicName;
   const label = generateSpeakUsageRecordLabel(
     dataListRate.value,
     dataListPitch.value,
-    dataListBgm.value,
     speakContentData.value.rate,
     speakContentData.value.pitch,
     speakContentData.value.volume,
-    speakContentData.value.bgmVolume,
     speakContentData.value.effect,
     speakContentData.value.effectValue,
-    speakContentData.value.bgm,
   );
   await pushUsageRecords(label);
   emit('submit', { ...toRaw(speakContentData.value), label });
@@ -203,7 +214,7 @@ onMounted(async () => {
   &.se-usage-record-showed {
     .se-usage-record {
       .se-usage-record-list {
-        @apply overflow-y-auto h-auto;
+        @apply h-full overflow-x-hidden overflow-y-auto;
       }
 
       @apply h-66;

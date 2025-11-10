@@ -1,5 +1,5 @@
 import type { Effect } from '@/cosy-voice';
-import type { SpeakContentDataModal } from './model';
+import type { BgmContentDataModel, SpeakContentDataModal } from './model';
 
 export class SpeakContentData implements SpeakContentDataModal {
   constructor(
@@ -10,6 +10,7 @@ export class SpeakContentData implements SpeakContentDataModal {
     effect?: Effect,
     effectValue?: string,
     bgm?: string,
+    bgmName?: string,
     label?: string,
   ) {
     this.rate = rate;
@@ -19,6 +20,7 @@ export class SpeakContentData implements SpeakContentDataModal {
     this.effect = effect;
     this.effectValue = effectValue;
     this.bgm = bgm;
+    this.bgmName = bgmName;
     this.label = label;
   }
 
@@ -29,5 +31,16 @@ export class SpeakContentData implements SpeakContentDataModal {
   effect?: Effect;
   effectValue?: string;
   bgm?: string;
+  bgmName?: string;
   label?: string;
+}
+
+export class BgmContentData implements BgmContentDataModel {
+  constructor(category?: string, music?: string) {
+    this.category = category;
+    this.music = music;
+  }
+
+  category?: string;
+  music?: string;
 }

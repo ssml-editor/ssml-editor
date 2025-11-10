@@ -20,6 +20,7 @@ export const speakHtmlToElement: EditorHtmlToElementMethod = ({
     : undefined;
   const effectValue = HtmlUtils.getDataAttribute(element, 'effect-value');
   const bgm = HtmlUtils.getDataAttribute(element, 'bgm');
+  const bgmName = HtmlUtils.getDataAttribute(element, 'bgmName');
   const bgmVolume = HtmlUtils.getDataAttribute(element, 'bgm-volume')
     ? +HtmlUtils.getDataAttribute(element, 'bgm-volume')!!
     : undefined;
@@ -32,6 +33,7 @@ export const speakHtmlToElement: EditorHtmlToElementMethod = ({
     effect: effect,
     effectValue: effectValue,
     bgm: bgm,
+    bgmName: bgmName,
     bgmVolume: bgmVolume,
     children: children,
   };

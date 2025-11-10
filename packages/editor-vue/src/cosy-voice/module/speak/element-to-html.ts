@@ -10,8 +10,17 @@ export const speakElementToHtml: EditorElementToHtmlMethod = ({
   element,
   childrenHtml,
 }: EditorElementToHtmlMethodProps): string => {
-  const { mark, rate, pitch, volume, effect, effectValue, bgm, bgmVolume } =
-    element as Speak;
+  const {
+    mark,
+    rate,
+    pitch,
+    volume,
+    effect,
+    effectValue,
+    bgm,
+    bgmName,
+    bgmVolume,
+  } = element as Speak;
   return HtmlUtils.createElementAsString(
     SPEAK_HTML_NODE_NAME,
     SPEAK_TYPE,
@@ -25,6 +34,7 @@ export const speakElementToHtml: EditorElementToHtmlMethod = ({
       effect: effect,
       'effect-value': effectValue,
       bgm: bgm,
+      bgmName: bgmName,
       'bgm-volume': bgmVolume,
     },
     childrenHtml,

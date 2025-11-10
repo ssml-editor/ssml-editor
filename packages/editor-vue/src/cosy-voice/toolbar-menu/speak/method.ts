@@ -4,14 +4,11 @@ import type { LabelValue } from '@ssml-editor/core';
 export function generateSpeakUsageRecordLabel(
   dataListRate: LabelValue[],
   dataListPitch: LabelValue[],
-  dataListBgm: LabelValue[],
   rate: number,
   pitch: number,
   volume: number,
-  bgmVolume: number,
   effect?: Effect,
   effectValue?: string,
-  bgm?: string,
 ): string {
   let rateName = '';
   for (const r of dataListRate) {
@@ -30,7 +27,7 @@ export function generateSpeakUsageRecordLabel(
   const parts: string[] = [];
   parts.push(rateName);
   parts.push(pitchName);
-  parts.push(volume.toString());
+  parts.push(`v${volume}`);
   if (effect) {
     parts.push(effect.toString());
     if (
@@ -42,14 +39,5 @@ export function generateSpeakUsageRecordLabel(
       parts.push(effectValue);
     }
   }
-  if (bgm) {
-    for (const b of dataListBgm) {
-      if (b.value === bgm) {
-        parts.push(b.label);
-        break;
-      }
-    }
-  }
-  parts.push(bgmVolume.toString());
   return parts.join('-');
 }
