@@ -8,7 +8,15 @@
       </el-input>
     </el-form>
     <div class="se-voice-content-search-result" v-if="showSearchResult">
-      <select-list v-model="searchVoice" :data-list="searchResult"></select-list>
+      <select-list v-model="searchVoiceId" :data-list="searchVoiceDataList">
+        <template #default="{ model, dataList }">
+          <p class="se-voice-item" :class="{ activated: item.value === model }" :title="item.label"
+            v-for="(item, index) in dataList" :key="index" @click="voiceSearchSelectHandler(item)">
+            <Player :src="item.src"></Player>
+            <span class="se-text">{{ item.label }}</span>
+          </p>
+        </template>
+      </select-list>
     </div>
   </div>
   <div class="se-voice-content-body" :style="{ display: showSearchResult ? 'none' : 'flex' }">
@@ -17,14 +25,22 @@
         @update:model-value="categoryValueChangeHandler" @change="categoryChangeHandler"></infinite-scroll>
     </list-wrapper>
     <list-wrapper title="音色">
-      <infinite-scroll v-if="showVoiceList" v-model="voiceContentData.voice" :page-size="voicePageSize"
-        :load="fetchVoiceList" @change="voiceChangeHandler"></infinite-scroll>
+      <infinite-scroll v-if="showVoiceList" v-model="voiceContentData.voiceId" :page-size="voicePageSize"
+        :load="fetchVoiceList" @change="voiceChangeHandler">
+        <template #default="{ model, dataList }">
+          <p class="se-voice-item" :class="{ activated: item.value === model }" :title="item.label"
+            v-for="(item, index) in dataList" :key="index" @click="voiceSelectHandler(item)">
+            <Player :src="item.src"></Player>
+            <span class="se-text">{{ item.label }}</span>
+          </p>
+        </template>
+      </infinite-scroll>
     </list-wrapper>
   </div>
 </template>
 
 <script setup lang="ts">
-import { InfiniteScroll } from '@/component';
+import { InfiniteScroll, Player } from '@/component';
 import { Search } from '@element-plus/icons-vue';
 import type { LabelValue } from '@ssml-editor/core';
 import { ListWrapper, SelectList } from '@ssml-editor/vue';
@@ -37,10 +53,11 @@ import type { VoiceProps } from './type';
 const showSearchResult = ref(false);
 const showVoiceList = ref(false);
 const searchInput = ref('');
-const categoryDataList = ref<LabelValue[]>([]);
-const voiceDataList = ref<LabelValue[]>([]);
-const searchResult = ref<LabelValue[]>([]);
-const searchVoice = ref<string>();
+const categoryDataList = ref<(LabelValue & Record<string, any>)[]>([]);
+const voiceDataList = ref<(LabelValue & Record<string, any>)[]>([]);
+const searchVoiceDataList = ref<(LabelValue & Record<string, any>)[]>([]);
+const searchVoiceId = ref<string>();
+const searchVoiceSrc = ref<string>();
 const voiceContentData = defineModel<VoiceContentDataModel>({
   default: new VoiceContentData(),
 });
@@ -55,7 +72,7 @@ const {
 function searchInputHandler(value: string) {
   if (value.trim() === '') {
     showSearchResult.value = false;
-    searchResult.value = [];
+    searchVoiceDataList.value = [];
   } else {
     showSearchResult.value = true;
   }
@@ -68,7 +85,9 @@ function categoryValueChangeHandler() {
   });
 }
 
-async function fetchVoiceList(page: number): Promise<LabelValue[]> {
+async function fetchVoiceList(
+  page: number,
+): Promise<(LabelValue & Record<string, any>)[]> {
   const voices = await fetchVoices({
     page,
     category: voiceContentData.value.category,
@@ -76,10 +95,13 @@ async function fetchVoiceList(page: number): Promise<LabelValue[]> {
   return voices.map((item) => ({
     label: item.name,
     value: item.id,
+    src: item.src,
   }));
 }
 
-async function categoryChangeHandler(categoryData: LabelValue[]) {
+async function categoryChangeHandler(
+  categoryData: (LabelValue & Record<string, any>)[],
+) {
   showVoiceList.value = false;
   if (categoryData.length > 0) {
     categoryDataList.value = categoryData;
@@ -97,36 +119,49 @@ async function categoryChangeHandler(categoryData: LabelValue[]) {
   }
 }
 
-async function voiceChangeHandler(voiceData: LabelValue[]) {
+async function voiceChangeHandler(
+  voiceData: (LabelValue & Record<string, any>)[],
+) {
   if (voiceData.length > 0) {
     voiceDataList.value = voiceData;
     if (
-      !voiceContentData.value.voice ||
-      !voiceData.some((item) => item.value === voiceContentData.value.voice)
+      !voiceContentData.value.voiceId ||
+      !voiceData.some((item) => item.value === voiceContentData.value.voiceId)
     ) {
-      voiceContentData.value.voice = voiceData[0].value as string;
+      voiceContentData.value.voiceId = voiceData[0].value as string;
     }
   }
 }
 
 async function searchSubmitHandler() {
-  searchVoice.value = undefined;
-  searchResult.value = [];
+  searchVoiceId.value = undefined;
+  searchVoiceDataList.value = [];
   const voices = await searchVoices({
     word: searchInput.value,
   });
   if (voices.length > 0) {
-    searchResult.value = voices.map((item) => ({
+    searchVoiceDataList.value = voices.map((item) => ({
       label: item.name,
       value: item.id,
+      src: item.src,
     }));
-    searchVoice.value = voices[0].id;
+    searchVoiceId.value = voices[0].id;
   }
+}
+
+function voiceSelectHandler(item: LabelValue & Record<string, any>) {
+  voiceContentData.value.voiceId = item.value as string;
+  voiceContentData.value.voiceSrc = item.src;
+}
+
+function voiceSearchSelectHandler(item: LabelValue & Record<string, any>) {
+  searchVoiceId.value = item.value as string;
+  searchVoiceSrc.value = item.src;
 }
 
 function getData(): VoiceContentDataModel {
   if (showSearchResult.value) {
-    return { voice: searchVoice.value };
+    return { voiceId: searchVoiceId.value, voiceSrc: searchVoiceSrc.value };
   } else {
     return toRaw(voiceContentData.value);
   }
@@ -139,6 +174,27 @@ defineExpose({
 
 <style scoped>
 @reference "tailwindcss";
+
+.se-voice-item {
+  &.activated {
+    @apply text-blue-500;
+  }
+
+  &:hover {
+    @apply bg-(--color-li-hover-bg);
+  }
+
+  .se-text {
+    @apply text-xs text-start overflow-hidden whitespace-nowrap text-ellipsis min-w-[0] flex-1 ml-1;
+  }
+
+  :deep(.se-player-play),
+  :deep(.se-player-pause) {
+    @apply text-xs;
+  }
+
+  @apply m-[0] pt-1 pb-1 pl-1 pr-1 cursor-pointer flex justify-between items-center;
+}
 
 .se-voice-content-search {
   .se-voice-content-search-result {

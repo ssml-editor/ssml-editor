@@ -1,10 +1,11 @@
 export interface ResponseVoice {
   id: string;
   name: string;
+  src: string;
 }
 
 export interface FetchVoiceParams {
-  page: number,
+  page: number;
   category?: string;
 }
 
@@ -14,5 +15,6 @@ export interface SearchVoiceParams {
 
 export interface VoiceContentDataModel {
   category?: string;
-  voice?: string;
+  voiceId?: string;
+  voiceSrc?: string;
 }
