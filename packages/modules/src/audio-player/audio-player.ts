@@ -8,12 +8,13 @@ import {
 import { isFunction } from 'is-what';
 import { AudioPlayerStatus } from './audio-player.enum';
 import type {
-  ErrorChangeListener,
-  ExtEvent,
-  ExtListener,
+  AudioPlayerErrorChangeListener,
+  AudioPlayerEvent,
+  AudioPlayerEventListener,
+  AudioPlayerEventListenerList,
+  AudioPlayerStatusChangeListener,
+  HowlErrorEvent,
   HowlEvent,
-  HowlListener,
-  StatusChangeListener,
 } from './audio-player.type';
 
 Howler.html5PoolSize = 100;
@@ -29,12 +30,27 @@ export class AudioPlayer extends Howl {
   private _error: unknown = undefined;
   private _status: AudioPlayerStatus = AudioPlayerStatus.UNLOADED;
   private _soundId: number | undefined = undefined;
-  private _eventListeners: Record<ExtEvent, ExtListener[]> = {
+  private _eventListeners: AudioPlayerEventListenerList = {
     errorchange: [],
     statuschange: [],
+    load: [],
+    play: [],
+    end: [],
+    pause: [],
+    stop: [],
+    mute: [],
+    volume: [],
+    rate: [],
+    seek: [],
+    fade: [],
+    unlock: [],
+    loaderror: [],
+    playerror: [],
   };
 
-  options: HowlOptions;
+  readonly options: Readonly<HowlOptions>;
+  readonly eventListenerList: Readonly<AudioPlayerEventListenerList> =
+    this._eventListeners;
 
   get error(): unknown {
     return this._error;
@@ -43,9 +59,11 @@ export class AudioPlayer extends Howl {
   set error(value: unknown) {
     if (value !== this._error) {
       this._error = value;
-      this._eventListeners['errorchange'].forEach((callback: ExtListener) => {
-        (callback as ErrorChangeListener)(value, this._soundId);
-      });
+      this._eventListeners['errorchange'].forEach(
+        (callback: AudioPlayerErrorChangeListener) => {
+          callback(value, this._soundId);
+        },
+      );
     }
   }
 
@@ -56,9 +74,11 @@ export class AudioPlayer extends Howl {
   set status(value: AudioPlayerStatus) {
     if (value !== this._status) {
       this._status = value;
-      this._eventListeners['statuschange'].forEach((callback: ExtListener) => {
-        (callback as StatusChangeListener)(value, this._soundId);
-      });
+      this._eventListeners['statuschange'].forEach(
+        (callback: AudioPlayerStatusChangeListener) => {
+          callback(value, this._soundId);
+        },
+      );
     }
   }
 
@@ -73,166 +93,196 @@ export class AudioPlayer extends Howl {
   }
 
   private initEvents() {
-    this.on('loaderror', (soundId: number, error: unknown) => {
+    super.on('loaderror', (soundId: number, error: unknown) => {
       this.soundId = soundId;
       this.error = error;
       this.status = AudioPlayerStatus.LOAD_ERROR;
+      this._eventListeners['loaderror'].forEach(
+        (callback: HowlErrorCallback) => {
+          callback(soundId, error);
+        },
+      );
     });
-    this.on('playerror', (soundId: number, error: unknown) => {
+    super.on('playerror', (soundId: number, error: unknown) => {
       this.soundId = soundId;
       this.error = error;
       this.status = AudioPlayerStatus.PLAY_ERROR;
+      this._eventListeners['playerror'].forEach(
+        (callback: HowlErrorCallback) => {
+          callback(soundId, error);
+        },
+      );
     });
-    this.on('load', () => {
+    super.on('load', () => {
       const status = AudioPlayerStatus.fromString(this.state());
       if (status) {
         this.status = status;
       }
+      this._eventListeners['load'].forEach((callback: () => void) => {
+        callback();
+      });
     });
-    this.on('play', (soundId: number) => {
+    super.on('play', (soundId: number) => {
       this.soundId = soundId;
       this.status = AudioPlayerStatus.PLAYING;
+      this._eventListeners['play'].forEach((callback: HowlCallback) => {
+        callback(soundId);
+      });
     });
-    this.on('pause', (soundId: number) => {
+    super.on('pause', (soundId: number) => {
       this.soundId = soundId;
       this.status = AudioPlayerStatus.PAUSING;
+      this._eventListeners['pause'].forEach((callback: HowlCallback) => {
+        callback(soundId);
+      });
     });
-    this.on('stop', (soundId: number) => {
+    super.on('stop', (soundId: number) => {
       this.soundId = soundId;
       this.status = AudioPlayerStatus.STOPPING;
+      this._eventListeners['stop'].forEach((callback: HowlCallback) => {
+        callback(soundId);
+      });
     });
-    this.on('end', (soundId: number) => {
+    super.on('end', (soundId: number) => {
       this.soundId = soundId;
       this.status = AudioPlayerStatus.ENDED;
+      this._eventListeners['end'].forEach((callback: HowlCallback) => {
+        callback(soundId);
+      });
+    });
+    super.on('mute', (soundId: number) => {
+      this._eventListeners['mute'].forEach((callback: HowlCallback) => {
+        callback(soundId);
+      });
+    });
+    super.on('volume', (soundId: number) => {
+      this._eventListeners['volume'].forEach((callback: HowlCallback) => {
+        callback(soundId);
+      });
+    });
+    super.on('rate', (soundId: number) => {
+      this._eventListeners['rate'].forEach((callback: HowlCallback) => {
+        callback(soundId);
+      });
+    });
+    super.on('seek', (soundId: number) => {
+      this._eventListeners['seek'].forEach((callback: HowlCallback) => {
+        callback(soundId);
+      });
+    });
+    super.on('fade', (soundId: number) => {
+      this._eventListeners['fade'].forEach((callback: HowlCallback) => {
+        callback(soundId);
+      });
+    });
+    super.on('unlock', (soundId: number) => {
+      this._eventListeners['unlock'].forEach((callback: HowlCallback) => {
+        callback(soundId);
+      });
     });
   }
 
-  override on(event: 'errorchange', callback: ErrorChangeListener): this;
-  override on(event: 'statuschange', callback: StatusChangeListener): this;
-  override on(event: 'load', callback: () => void, id?: number): this;
+  replaceEventListeners(eventListeners: AudioPlayerEventListenerList) {
+    Object.keys(eventListeners).forEach((key) => {
+      const listeners =
+        this._eventListeners[key as keyof AudioPlayerEventListenerList];
+      listeners.splice(
+        0,
+        listeners.length,
+        ...(eventListeners[key as keyof AudioPlayerEventListenerList] as any),
+      );
+    });
+  }
+
   override on(
-    event: 'loaderror' | 'playerror',
-    callback: HowlErrorCallback,
-    id?: number,
+    event: 'errorchange',
+    callback: AudioPlayerErrorChangeListener,
   ): this;
   override on(
-    event:
-      | 'play'
-      | 'end'
-      | 'pause'
-      | 'stop'
-      | 'mute'
-      | 'volume'
-      | 'rate'
-      | 'seek'
-      | 'fade'
-      | 'unlock',
-    callback: HowlCallback,
-    id?: number,
+    event: 'statuschange',
+    callback: AudioPlayerStatusChangeListener,
+  ): this;
+  override on(event: 'load', callback: () => void): this;
+  override on(event: HowlErrorEvent, callback: HowlErrorCallback): this;
+  override on(event: HowlEvent, callback: HowlCallback): this;
+  override on(
+    event: AudioPlayerEvent,
+    callback: AudioPlayerEventListener,
   ): this;
   override on(
-    event: HowlEvent | ExtEvent,
-    callback: HowlListener | ExtListener,
-    id?: number,
+    event: AudioPlayerEvent,
+    callback: AudioPlayerEventListener,
   ): this {
-    if (event === 'errorchange' || event === 'statuschange') {
-      this._eventListeners[event].unshift(callback as any);
-      return this;
-    } else {
-      return super.on(event, callback as HowlListener, id);
-    }
+    this._eventListeners[event].unshift(callback as any);
+    return this;
   }
 
   override off(): this;
-  override off(event: 'errorchange', callback?: ErrorChangeListener): this;
-  override off(event: 'statuschange', callback?: StatusChangeListener): this;
-  override off(event: 'load', callback?: () => void, id?: number): this;
   override off(
-    event: 'loaderror' | 'playerror',
-    callback?: HowlErrorCallback,
-    id?: number,
+    event: 'errorchange',
+    callback?: AudioPlayerErrorChangeListener,
   ): this;
   override off(
-    event:
-      | 'play'
-      | 'end'
-      | 'pause'
-      | 'stop'
-      | 'mute'
-      | 'volume'
-      | 'rate'
-      | 'seek'
-      | 'fade'
-      | 'unlock',
-    callback?: HowlCallback,
-    id?: number,
+    event: 'statuschange',
+    callback?: AudioPlayerStatusChangeListener,
   ): this;
-  override off(event: HowlEvent, id: number): this;
+  override off(event: 'load', callback?: () => void): this;
+  override off(event: HowlErrorEvent, callback?: HowlErrorCallback): this;
+  override off(event: HowlEvent, callback?: HowlCallback): this;
   override off(
-    event?: HowlEvent | ExtEvent,
-    callback?: number | HowlListener | ExtListener,
-    id?: number,
+    event?: AudioPlayerEvent,
+    callback?: AudioPlayerEventListener,
+  ): this;
+  override off(
+    event?: AudioPlayerEvent,
+    callback?: AudioPlayerEventListener,
   ): this {
     if (event) {
-      if (event === 'errorchange' || event === 'statuschange') {
-        if (!callback) {
-          this._eventListeners[event] = [];
-        } else if (isFunction(callback)) {
-          this._eventListeners[event] = this._eventListeners[event].filter(
-            (item) => {
-              return item !== callback;
-            },
-          );
+      if (!callback) {
+        this._eventListeners[event].splice(0);
+      } else if (isFunction(callback)) {
+        const listeners = this._eventListeners[event];
+        for (let i = listeners.length - 1; i >= 0; i--) {
+          if (listeners[i] === callback) {
+            listeners.splice(i, 1);
+          }
         }
-        return this;
-      } else {
-        return super.off(event, callback as HowlListener, id);
       }
     } else {
-      this._eventListeners['errorchange'] = [];
-      this._eventListeners['statuschange'] = [];
-      return super.off(event, callback as HowlListener, id);
+      Object.keys(this._eventListeners).forEach((key) => {
+        this._eventListeners[key as keyof typeof this._eventListeners].splice(
+          0,
+        );
+      });
     }
+    return this;
   }
 
-  override once(event: 'errorchange', callback: ErrorChangeListener): this;
-  override once(event: 'statuschange', callback: StatusChangeListener): this;
-  override once(event: 'load', callback: () => void, id?: number): this;
   override once(
-    event: 'loaderror' | 'playerror',
-    callback: HowlErrorCallback,
-    id?: number,
+    event: 'errorchange',
+    callback: AudioPlayerErrorChangeListener,
   ): this;
   override once(
-    event:
-      | 'play'
-      | 'end'
-      | 'pause'
-      | 'stop'
-      | 'mute'
-      | 'volume'
-      | 'rate'
-      | 'seek'
-      | 'fade'
-      | 'unlock',
-    callback: HowlCallback,
-    id?: number,
+    event: 'statuschange',
+    callback: AudioPlayerStatusChangeListener,
+  ): this;
+  override once(event: 'load', callback: () => void): this;
+  override once(event: HowlErrorEvent, callback: HowlErrorCallback): this;
+  override once(event: HowlEvent, callback: HowlCallback): this;
+  override once(
+    event: AudioPlayerEvent,
+    callback: AudioPlayerEventListener,
   ): this;
   override once(
-    event: HowlEvent | ExtEvent,
-    callback: HowlListener | ExtListener,
-    id?: number,
+    event: AudioPlayerEvent,
+    callback: AudioPlayerEventListener,
   ): this {
-    if (event === 'errorchange' || event === 'statuschange') {
-      const wrapper = (...args: any[]) => {
-        (callback as any).apply(this, args);
-        this.off(event as 'errorchange', wrapper);
-      };
-      this._eventListeners[event].unshift(wrapper);
-      return this;
-    } else {
-      return super.once(event, callback as HowlListener, id);
-    }
+    const wrapper = (...args: any[]) => {
+      (callback as any).apply(this, args);
+      this.off(event, wrapper);
+    };
+    this._eventListeners[event].unshift(wrapper);
+    return this;
   }
 
   static DefaultOptions: HowlOptions = {
