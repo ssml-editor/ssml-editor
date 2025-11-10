@@ -1,8 +1,8 @@
 <template>
   <div ref="select-list-div" class="se-select-list">
     <slot :model="model" :dataList="dataList" v-if="dataList.length > 0">
-      <p class="se-item" :class="{ activated: item.value === model }" v-for="(item, index) in dataList" :key="index"
-        @click="selectHandler(item)">
+      <p class="se-item" :class="{ activated: item.value === model }" :title="item.label"
+        v-for="(item, index) in dataList" :key="index" @click="selectHandler(item)">
         {{ item.label }}
       </p>
     </slot>
@@ -15,13 +15,17 @@
 <script setup lang="ts">
 import { Blank, BlankType } from '@/component';
 import type { LabelValue } from '@ssml-editor/core';
-import { nextTick, onMounted, useTemplateRef } from 'vue';
+import { nextTick, onMounted, ref, useTemplateRef } from 'vue';
 
+const selectedItem = ref<LabelValue & Record<string, any>>();
 const selectListDivRef = useTemplateRef('select-list-div');
 const model = defineModel<string | number | undefined>({ default: undefined });
-const { dataList = [] } = defineProps<{ dataList?: LabelValue[] }>();
+const { dataList = [] } = defineProps<{
+  dataList?: (LabelValue & Record<string, any>)[];
+}>();
 
-function selectHandler(item: LabelValue) {
+function selectHandler(item: LabelValue & Record<string, any>) {
+  selectedItem.value = item;
   model.value = item.value;
 }
 
@@ -38,10 +42,18 @@ function scrollIntoView() {
   }
 }
 
+function getSelectedItem(): (LabelValue & Record<string, any>) | undefined {
+  return selectedItem.value;
+}
+
 onMounted(() => {
   nextTick(() => {
     scrollIntoView();
   });
+});
+
+defineExpose({
+  getSelectedItem,
 });
 </script>
 
@@ -62,7 +74,7 @@ onMounted(() => {
       @apply bg-(--color-li-hover-bg);
     }
 
-    @apply text-xs m-[0] pt-1 pb-1 cursor-pointer;
+    @apply text-xs m-[0] pt-1 pb-1 pl-1 pr-1 cursor-pointer overflow-hidden whitespace-nowrap text-ellipsis;
   }
 
   .se-blank {
