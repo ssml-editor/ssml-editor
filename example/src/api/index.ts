@@ -1,7 +1,11 @@
 import type { LabelValue } from '@ssml-editor/core';
 import type {
+  Bgm,
+  FetchBgmParams,
   FetchSoundParams,
+  FetchVoiceParams,
   ResponseVoice,
+  SearchBgmParams,
   SearchSoundParams,
   SearchVoiceParams,
   Sound,
@@ -9,41 +13,41 @@ import type {
 import axios from 'axios';
 import '../mock';
 
-export async function voiceCategories(): Promise<LabelValue[]> {
-  const resp = await axios.get('/voice/category');
-  return resp.data;
-}
-
-export async function voices(filter: any): Promise<ResponseVoice[]> {
-  const resp = await axios.get('/voices', { params: { ...filter } });
-  return resp.data;
-}
-
-export async function searchVoices(
-  params: SearchVoiceParams,
-): Promise<ResponseVoice[]> {
-  const resp = await axios.get('/voices', { params });
-  return resp.data;
-}
-
-export async function soundCategories(): Promise<LabelValue[]> {
-  const resp = await axios.get('/sound/category');
-  return resp.data;
-}
-
-export async function sounds(params: FetchSoundParams): Promise<Sound[]> {
-  const resp = await axios.get('/sounds', { params });
-  return resp.data;
-}
-
-export async function searchSounds(
-  params: SearchSoundParams,
-): Promise<Sound[]> {
-  const resp = await axios.get('/sounds', { params });
-  return resp.data;
-}
-
-export async function bgms(page: number): Promise<LabelValue[]> {
-  const resp = await axios.get('/bgms', { params: { page } });
-  return resp.data;
-}
+export const Api = {
+  async fetchVoiceCategories(page: number): Promise<LabelValue[]> {
+    const resp = await axios.get('/voice/category', { params: { page } });
+    return resp.data;
+  },
+  async fetchVoices(params: FetchVoiceParams): Promise<ResponseVoice[]> {
+    const resp = await axios.get('/voices', { params });
+    return resp.data;
+  },
+  async searchVoices(params: SearchVoiceParams): Promise<ResponseVoice[]> {
+    const resp = await axios.get('/voices', { params });
+    return resp.data;
+  },
+  async fetchSoundCategories(page: number): Promise<LabelValue[]> {
+    const resp = await axios.get('/sound/category', { params: { page } });
+    return resp.data;
+  },
+  async fetchSounds(params: FetchSoundParams): Promise<Sound[]> {
+    const resp = await axios.get('/sounds', { params });
+    return resp.data;
+  },
+  async searchSounds(params: SearchSoundParams): Promise<Sound[]> {
+    const resp = await axios.get('/sounds', { params });
+    return resp.data;
+  },
+  async fetchBgmCategories(page: number): Promise<LabelValue[]> {
+    const resp = await axios.get('/bgm/category', { params: { page } });
+    return resp.data;
+  },
+  async fetchBgms(params: FetchBgmParams): Promise<Bgm[]> {
+    const resp = await axios.get('/bgms', { params });
+    return resp.data;
+  },
+  async searchBgms(params: SearchBgmParams): Promise<Bgm[]> {
+    const resp = await axios.get('/bgms', { params });
+    return resp.data;
+  },
+};

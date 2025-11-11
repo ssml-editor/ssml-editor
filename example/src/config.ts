@@ -29,6 +29,7 @@ import {
   UndoMenu,
   VoiceMenu,
   voidElementPlugin,
+  type BgmProps,
   type SayAsProps,
   type SoundEventProps,
   type SpeakProps,
@@ -43,46 +44,40 @@ import {
   type EditorConfig,
   type ToolbarDividerProps,
 } from '@ssml-editor/vue';
-import {
-  bgms,
-  searchSounds,
-  searchVoices,
-  soundCategories,
-  sounds,
-  voiceCategories,
-  voices,
-} from './api';
+import { Api } from './api';
 
 const sayAsValidateMethod: ValidateMethod = (text, defaultValidateMethod) =>
   defaultValidateMethod(text);
 
 export default <EditorConfig>{
-  databaseName: 'abcdefg',
+  databaseName: 'example',
   scroll: true,
   placeholder: '请输入内容...',
-  maxLength: 10,
+  maxLength: 200,
   animation: { grayscale: true, zoom: true },
   html: {
     storageType: StorageType.LOCAL,
-    storeName: '001',
+    storeName: 'example-html',
   },
   toolbar: {
     menus: [
       {
         component: VoiceMenu,
         props: <VoiceProps>{
-          fetchVoices: voices,
-          fetchCategories: voiceCategories,
-          searchVoices: searchVoices,
+          fetchVoices: Api.fetchVoices,
+          fetchCategories: Api.fetchVoiceCategories,
+          searchVoices: Api.searchVoices,
         },
       },
       {
         component: SpeakMenu,
-        props: <SpeakProps>{
+        props: <SpeakProps & BgmProps>{
           rates: speakRateData,
           pitches: speakPitcheData,
           effects: speakEffectData,
-          fetchBgms: bgms,
+          fetchBgms: Api.fetchBgms,
+          fetchCategories: Api.fetchBgmCategories,
+          searchBgms: Api.searchBgms,
         },
       },
       {
@@ -97,9 +92,9 @@ export default <EditorConfig>{
       {
         component: SoundMenu,
         props: <SoundEventProps>{
-          fetchSounds: sounds,
-          fetchCategories: soundCategories,
-          searchSounds: searchSounds,
+          fetchSounds: Api.fetchSounds,
+          fetchCategories: Api.fetchSoundCategories,
+          searchSounds: Api.searchSounds,
         },
       },
       {
