@@ -1,0 +1,10 @@
+{
+  "version.label": {
+    "message": "Next",
+    "description": "The label for version next"
+  },
+  "sidebar.tutorialSidebar.category.Getting Started": {
+    "message": "开始上手",
+    "description": "The label for category 'Getting Started' in sidebar 'tutorialSidebar'"
+  }
+}

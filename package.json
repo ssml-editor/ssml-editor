@@ -17,15 +17,20 @@
   ],
   "workspaces": [
     "packages/*",
-    "example"
+    "example",
+    "website"
   ],
   "engines": {
     "node": ">=22.12.0"
   },
   "scripts": {
-    "start": "run-s dev:example",
+    "start": "npm run dev:website",
+    "start:cn": "npm run dev:website:cn",
     "dev:example": "npm run dev --workspace=@ssml-editor/example",
-    "build:all": "run-s build:base build:utils build:modules build:core build:vue build:editor-vue build:example",
+    "dev:website": "npm start --workspace=@ssml-editor/website",
+    "dev:website:cn": "npm run start:cn --workspace=@ssml-editor/website",
+    "build:all": "run-s build:packages build:example build:website",
+    "build:packages": "run-s build:base build:utils build:modules build:core build:vue build:editor-vue",
     "build:vue": "npm run build --workspace=@ssml-editor/vue",
     "build:core": "npm run build --workspace=@ssml-editor/core",
     "build:base": "npm run build --workspace=@ssml-editor/base",
@@ -33,7 +38,8 @@
     "build:example": "npm run build --workspace=@ssml-editor/example",
     "build:modules": "npm run build --workspace=@ssml-editor/modules",
     "build:editor-vue": "npm run build --workspace=@ssml-editor/editor-vue",
-    "deploy": "npm run deploy --workspace=@ssml-editor/example"
+    "build:website": "npm run build --workspace=@ssml-editor/website",
+    "deploy": "npm run build:all && shx cp -fr ./example/dist ./website/build/example/ && npm run deploy --workspace=@ssml-editor/website"
   },
   "peerDependencies": {
     "element-plus": "^2.0.0",
@@ -52,20 +58,20 @@
     "is-what": "^5.5.0",
     "localforage": "^1.10.0",
     "lodash": "^4.17.21",
-    "mathjs": "^15.0.0",
+    "mathjs": "^15.1.0",
     "pinyin-pro": "^3.27.0",
     "pinyinize": "^3.3.1",
-    "slate-vue3": "^0.9.0",
+    "slate-vue3": "^0.9.3",
     "typescript-event-emitter": "^2.1.0",
     "xml-formatter": "^3.6.7"
   },
   "devDependencies": {
     "@rushstack/eslint-patch": "^1.14.1",
-    "@tailwindcss/postcss": "^4.1.16",
-    "@tailwindcss/vite": "^4.1.16",
+    "@tailwindcss/postcss": "^4.1.17",
+    "@tailwindcss/vite": "^4.1.17",
     "@types/file-saver": "^2.0.7",
     "@types/howler": "^2.2.12",
-    "@types/node": "^24.10.0",
+    "@types/node": "^24.10.1",
     "@vitejs/plugin-vue": "^6.0.1",
     "@vitejs/plugin-vue-jsx": "^5.1.1",
     "@vue/eslint-config-prettier": "^10.2.0",
@@ -80,14 +86,15 @@
     "prettier": "^3.6.2",
     "rimraf": "^6.1.0",
     "rollup-plugin-copy": "^3.5.0",
+    "shx": "^0.4.0",
     "tailwind-scrollbar": "^4.0.2",
-    "tailwindcss": "^4.1.16",
+    "tailwindcss": "^4.1.17",
     "typescript": "^5.9.3",
-    "unplugin-element-plus": "^0.10.0",
-    "vite": "^7.1.12",
+    "unplugin-element-plus": "^0.11.1",
+    "vite": "^7.2.2",
     "vite-plugin-dts": "^4.5.4",
     "vite-plugin-html": "^3.2.2",
-    "vue": "^3.5.22",
+    "vue": "^3.5.24",
     "vue-tsc": "^3.1.3"
   }
 }

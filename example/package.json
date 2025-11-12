@@ -37,9 +37,7 @@
     "build": "run-s rm:dist type-check build-only",
     "build-only": "vite build --mode production",
     "type-check": "vue-tsc --noEmit --composite false",
-    "rm:dist": "rimraf dist",
-    "predeploy": "npm run build",
-    "deploy": "gh-pages -d dist"
+    "rm:dist": "rimraf dist"
   },
   "dependencies": {
     "@ssml-editor/base": "*",
@@ -48,15 +46,15 @@
     "@ssml-editor/modules": "*",
     "@ssml-editor/utils": "*",
     "@ssml-editor/vue": "*",
-    "axios": "^1.13.1",
+    "axios": "^1.13.2",
     "axios-mock-adapter": "^2.1.0",
     "element-plus": "^2.11.7",
-    "slate-vue3": "^0.9.0",
-    "vue": "^3.5.22"
+    "slate-vue3": "^0.9.3",
+    "vue": "^3.5.24"
   },
   "devDependencies": {
-    "@tailwindcss/vite": "^4.1.16",
-    "@types/node": "^24.10.0",
+    "@tailwindcss/vite": "^4.1.17",
+    "@types/node": "^24.10.1",
     "@vitejs/plugin-vue": "^6.0.1",
     "gh-pages": "^6.3.0",
     "npm-run-all": "^4.1.5",
@@ -64,10 +62,10 @@
     "postcss-nested": "^7.0.2",
     "rimraf": "^6.1.0",
     "tailwind-scrollbar": "^4.0.2",
-    "tailwindcss": "^4.1.16",
+    "tailwindcss": "^4.1.17",
     "typescript": "^5.9.3",
-    "unplugin-element-plus": "^0.10.0",
-    "vite": "^7.1.12",
+    "unplugin-element-plus": "^0.11.1",
+    "vite": "^7.2.2",
     "vite-plugin-html": "^3.2.2",
     "vue-tsc": "^3.1.3"
   }
