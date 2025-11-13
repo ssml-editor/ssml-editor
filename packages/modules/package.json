@@ -29,8 +29,8 @@
     "dist"
   ],
   "scripts": {
-    "start": "npm run build",
-    "build": "run-s rm:dist type-check build-only",
+    "start": "pnpm build",
+    "build": "pnpm rm:dist && pnpm type-check && pnpm build-only",
     "build-only": "vite build --mode production",
     "type-check": "vue-tsc --noEmit --composite false",
     "rm:dist": "rimraf dist"
@@ -43,12 +43,11 @@
   },
   "devDependencies": {
     "@types/howler": "^2.2.12",
-    "@types/node": "^24.10.1",
-    "npm-run-all": "^4.1.5",
-    "rimraf": "^6.1.0",
-    "typescript": "^5.9.3",
-    "vite": "^7.2.2",
-    "vite-plugin-dts": "^4.5.4",
-    "vue-tsc": "^3.1.3"
+    "@types/node": "catalog:",
+    "rimraf": "catalog:",
+    "typescript": "catalog:",
+    "vite": "catalog:",
+    "vite-plugin-dts": "catalog:",
+    "vue-tsc": "catalog:"
   }
 }

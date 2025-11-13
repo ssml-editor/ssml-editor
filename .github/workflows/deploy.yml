@@ -12,35 +12,39 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v5
 
-      # 2. 设置 Node.js 环境
+      # 2. 安装 pnpm
+      - name: Setup pnpm
+        uses: pnpm/action-setup@v4
+
+      # 3. 设置 Node.js 环境
       - name: Set up Node.js
         uses: actions/setup-node@v6
         with:
           node-version: '22' # 使用 Node.js 22.x 版本
           registry-url: 'https://registry.npmjs.org/'
-          cache: 'npm' # 启用 npm 缓存以加速依赖安装
+          cache: 'pnpm' # 启用 pnpm 缓存以加速依赖安装
 
-      # 3. 安装依赖
+      # 4. 安装依赖
       - name: Install dependencies
-        run: npm install
+        run: pnpm install
 
-      # 4. 构建项目所有包
+      # 5. 构建项目所有包
       - name: Build all packages
-        run: npm run build:packages # 运行构建脚本
+        run: pnpm run build:packages # 运行构建脚本
 
-      # 5. 构建项目示例
+      # 6. 构建项目示例
       - name: Build example
-        run: npm run build:example # 运行构建脚本，生成 example/dist 目录
+        run: pnpm run build:example # 运行构建脚本，生成 example/dist 目录
 
-      # 6. 构建项目网站
+      # 7. 构建项目网站
       - name: Build website
-        run: npm run build:website # 运行构建脚本，生成 website/build 目录
+        run: pnpm run build:website # 运行构建脚本，生成 website/build 目录
 
-      # 7. 复制 dist 目录到 build 目录中
+      # 8. 复制 dist 目录到 build 目录中
       - name: Copy example/dist to website/build
         run: cp -fr ./example/dist ./website/build/example/
 
-      # 5. 部署 website 到 GitHub Pages
+      # 9. 部署 website 到 GitHub Pages
       - name: Deploy to GitHub Pages
         uses: crazy-max/ghaction-github-pages@v4
         with:

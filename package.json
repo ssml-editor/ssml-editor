@@ -1,6 +1,7 @@
 {
   "name": "@ssml-editor/ssml-editor",
   "private": true,
+  "version": "1.0.0",
   "homepage": "https://github.com/ssml-editor/ssml-editor/",
   "repository": {
     "type": "git",
@@ -15,31 +16,37 @@
     "slate",
     "slate-editor"
   ],
+  "packageManager": "pnpm@10.22.0",
   "workspaces": [
     "packages/*",
     "example",
     "website"
   ],
   "engines": {
-    "node": ">=22.12.0"
+    "node": ">=22.12.0",
+    "pnpm": ">=10.22.0"
   },
   "scripts": {
-    "start": "npm run dev:website",
-    "start:cn": "npm run dev:website:cn",
-    "dev:example": "npm run dev --workspace=@ssml-editor/example",
-    "dev:website": "npm start --workspace=@ssml-editor/website",
-    "dev:website:cn": "npm run start:cn --workspace=@ssml-editor/website",
-    "build:all": "run-s build:packages build:example build:website",
-    "build:packages": "run-s build:base build:utils build:modules build:core build:vue build:editor-vue",
-    "build:vue": "npm run build --workspace=@ssml-editor/vue",
-    "build:core": "npm run build --workspace=@ssml-editor/core",
-    "build:base": "npm run build --workspace=@ssml-editor/base",
-    "build:utils": "npm run build --workspace=@ssml-editor/utils",
-    "build:example": "npm run build --workspace=@ssml-editor/example",
-    "build:modules": "npm run build --workspace=@ssml-editor/modules",
-    "build:editor-vue": "npm run build --workspace=@ssml-editor/editor-vue",
-    "build:website": "npm run build --workspace=@ssml-editor/website",
-    "deploy": "npm run build:all && shx cp -fr ./example/dist ./website/build/example/ && npm run deploy --workspace=@ssml-editor/website"
+    "start": "pnpm dev:website",
+    "start:cn": "pnpm dev:website:cn",
+    "dev:example": "pnpm --filter=@ssml-editor/example dev",
+    "dev:website": "pnpm --filter=@ssml-editor/website start",
+    "dev:website:cn": "pnpm --filter=@ssml-editor/website start:cn",
+    "build:all": "pnpm build:packages && pnpm build:example && pnpm build:website",
+    "build:packages": "pnpm build:base && pnpm build:utils && pnpm build:modules && pnpm build:core && pnpm build:vue && pnpm build:editor-vue",
+    "build:vue": "pnpm --filter=@ssml-editor/vue build",
+    "build:core": "pnpm --filter=@ssml-editor/core build",
+    "build:base": "pnpm --filter=@ssml-editor/base build",
+    "build:utils": "pnpm --filter=@ssml-editor/utils build",
+    "build:example": "pnpm --filter=@ssml-editor/example build",
+    "build:modules": "pnpm --filter=@ssml-editor/modules build",
+    "build:editor-vue": "pnpm --filter=@ssml-editor/editor-vue build",
+    "build:website": "pnpm --filter=@ssml-editor/website build",
+    "deploy": "pnpm build:all && shx cp -fr ./example/dist ./website/build/example/ && pnpm --filter=@ssml-editor/website deploy",
+    "test:publish": "pnpm -r publish --no-git-checks --force --dry-run --json",
+    "publish:next": "pnpm -r publish --tag=next --force --report-summary",
+    "promote:latest": "npm dist-tag add @ssml-editor/base:$npm_package_version latest && pnpm dist-tag add @ssml-editor/utils:$npm_package_version latest && pnpm dist-tag add @ssml-editor/modules:$npm_package_version latest && pnpm dist-tag add @ssml-editor/core:$npm_package_version latest && pnpm dist-tag add @ssml-editor/vue:$npm_package_version latest && pnpm dist-tag add @ssml-editor/editor-vue:$npm_package_version latest",
+    "unpublish": "npm unpublish @ssml-editor/base:$npm_package_version --force && npm unpublish @ssml-editor/utils:$npm_package_version --force && npm unpublish @ssml-editor/modules:$npm_package_version --force && npm unpublish @ssml-editor/core:$npm_package_version --force && npm unpublish @ssml-editor/vue:$npm_package_version --force && npm unpublish @ssml-editor/editor-vue:$npm_package_version --force"
   },
   "peerDependencies": {
     "element-plus": "^2.0.0",
@@ -66,7 +73,7 @@
     "xml-formatter": "^3.6.7"
   },
   "devDependencies": {
-    "@rushstack/eslint-patch": "^1.14.1",
+    "@rushstack/eslint-patch": "^1.15.0",
     "@tailwindcss/postcss": "^4.1.17",
     "@tailwindcss/vite": "^4.1.17",
     "@types/file-saver": "^2.0.7",
@@ -80,12 +87,11 @@
     "element-plus": "^2.11.7",
     "eslint": "^9.39.1",
     "eslint-plugin-vue": "^10.5.1",
-    "npm-run-all": "^4.1.5",
     "postcss": "^8.5.6",
     "postcss-nested": "^7.0.2",
     "prettier": "^3.6.2",
     "rimraf": "^6.1.0",
-    "rollup-plugin-copy": "^3.5.0",
+    "rollup-plugin-copy": "catalog:",
     "shx": "^0.4.0",
     "tailwind-scrollbar": "^4.0.2",
     "tailwindcss": "^4.1.17",
