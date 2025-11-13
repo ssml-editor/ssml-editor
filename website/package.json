@@ -3,7 +3,7 @@
   "version": "1.0.1",
   "private": true,
   "description": "SSML editor demo website",
-  "homepage": "https://github.com/ssml-editor/ssml-editor/",
+  "homepage": "https://www.ssmleditor.com",
   "repository": {
     "type": "git",
     "url": "git+https://github.com/ssml-editor/ssml-editor.git"
