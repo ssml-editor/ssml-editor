@@ -1,5 +1,6 @@
-name: Deploy SSMLEditor Library Demo
+name: Deploy SSMLEditor Library Example
 on:
+  workflow_dispatch:
   push:
     branches: [master]
 permissions:
