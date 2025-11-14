@@ -1,5 +1,9 @@
 import './style/index.css';
 
+export * from '@ssml-editor/base';
+export * from '@ssml-editor/core';
+export * from '@ssml-editor/modules';
+export * from '@ssml-editor/utils';
 export * from './component';
 export * from './constant';
 export * from './editor';
