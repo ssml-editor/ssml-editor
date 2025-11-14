@@ -1,5 +1,5 @@
 import { SPEAK_HTML_NODE_NAME, SPEAK_TYPE } from '@/cosy-voice';
-import { HtmlUtils } from '@ssml-editor/core';
+import { HTMLExtUtils } from '@ssml-editor/core';
 import {
   PARAGRAPH_HTML_NODE_NAME,
   PARAGRAPH_MARK,
@@ -25,10 +25,10 @@ export const pastePlugin: EditorPlugin = (editor: BaseEditor): BaseEditor => {
       // 判断是否为本编辑器生成的html
       if (
         text.startsWith(
-          `<${PARAGRAPH_HTML_NODE_NAME} ${HtmlUtils.typeKey}="${PARAGRAPH_TYPE}" data-mark="${PARAGRAPH_MARK}">`,
+          `<${PARAGRAPH_HTML_NODE_NAME} ${HTMLExtUtils.typeKey}="${PARAGRAPH_TYPE}" data-mark="${PARAGRAPH_MARK}">`,
         ) ||
         text.startsWith(
-          `<${SPEAK_HTML_NODE_NAME} ${HtmlUtils.typeKey}="${SPEAK_TYPE}"`,
+          `<${SPEAK_HTML_NODE_NAME} ${HTMLExtUtils.typeKey}="${SPEAK_TYPE}"`,
         )
       ) {
         data.setData('text/html', text);

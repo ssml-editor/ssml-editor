@@ -1,4 +1,4 @@
-import { HtmlUtils } from '@ssml-editor/core';
+import { HTMLExtUtils } from '@ssml-editor/core';
 import type {
   EditorHtmlToElementMethod,
   EditorHtmlToElementMethodProps,
@@ -11,18 +11,18 @@ export const speakHtmlToElement: EditorHtmlToElementMethod = ({
   element,
   children,
 }: EditorHtmlToElementMethodProps): Speak => {
-  const mark = HtmlUtils.getDataAttribute(element, 'mark', '');
-  const rate = HtmlUtils.getDataAttribute(element, 'rate', 1);
-  const pitch = HtmlUtils.getDataAttribute(element, 'pitch', 1);
-  const volume = HtmlUtils.getDataAttribute(element, 'volume', 100);
-  const effect = HtmlUtils.getDataAttribute(element, 'effect')
-    ? Effect.fromString(HtmlUtils.getDataAttribute(element, 'effect')!!)
+  const mark = HTMLExtUtils.getDataAttribute(element, 'mark', '');
+  const rate = HTMLExtUtils.getDataAttribute(element, 'rate', 1);
+  const pitch = HTMLExtUtils.getDataAttribute(element, 'pitch', 1);
+  const volume = HTMLExtUtils.getDataAttribute(element, 'volume', 100);
+  const effect = HTMLExtUtils.getDataAttribute(element, 'effect')
+    ? Effect.fromString(HTMLExtUtils.getDataAttribute(element, 'effect')!!)
     : undefined;
-  const effectValue = HtmlUtils.getDataAttribute(element, 'effect-value');
-  const bgm = HtmlUtils.getDataAttribute(element, 'bgm');
-  const bgmName = HtmlUtils.getDataAttribute(element, 'bgmName');
-  const bgmVolume = HtmlUtils.getDataAttribute(element, 'bgm-volume')
-    ? +HtmlUtils.getDataAttribute(element, 'bgm-volume')!!
+  const effectValue = HTMLExtUtils.getDataAttribute(element, 'effect-value');
+  const bgm = HTMLExtUtils.getDataAttribute(element, 'bgm');
+  const bgmName = HTMLExtUtils.getDataAttribute(element, 'bgmName');
+  const bgmVolume = HTMLExtUtils.getDataAttribute(element, 'bgm-volume')
+    ? +HTMLExtUtils.getDataAttribute(element, 'bgm-volume')!!
     : undefined;
   return {
     type: SPEAK_TYPE,

@@ -1,4 +1,4 @@
-import { HtmlUtils } from '@ssml-editor/core';
+import { HTMLExtUtils } from '@ssml-editor/core';
 import type {
   EditorHtmlToElementMethod,
   EditorHtmlToElementMethodProps,
@@ -10,8 +10,8 @@ export const breakHtmlToElement: EditorHtmlToElementMethod = ({
   element,
   children,
 }: EditorHtmlToElementMethodProps): Break => {
-  const mark = HtmlUtils.getDataAttribute(element, 'mark', '');
-  const time = HtmlUtils.getDataAttribute(element, 'time', '');
+  const mark = HTMLExtUtils.getDataAttribute(element, 'mark', '');
+  const time = HTMLExtUtils.getDataAttribute(element, 'time', '');
   return {
     type: BREAK_TYPE,
     mark: mark,

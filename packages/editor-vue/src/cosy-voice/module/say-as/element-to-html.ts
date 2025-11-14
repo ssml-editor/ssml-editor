@@ -1,4 +1,4 @@
-import { HtmlUtils } from '@ssml-editor/core';
+import { HTMLExtUtils } from '@ssml-editor/core';
 import type {
   EditorElementToHtmlMethod,
   EditorElementToHtmlMethodProps,
@@ -11,7 +11,7 @@ export const sayAsElementToHtml: EditorElementToHtmlMethod = ({
   childrenHtml,
 }: EditorElementToHtmlMethodProps): string => {
   const { mark, interpretAs } = element as SayAs;
-  return HtmlUtils.createElementAsString(
+  return HTMLExtUtils.createElementAsString(
     SAY_AS_TYPE,
     true,
     false,

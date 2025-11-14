@@ -1,4 +1,4 @@
-import { HtmlUtils } from '@ssml-editor/core';
+import { HTMLExtUtils } from '@ssml-editor/core';
 import type {
   EditorHtmlToElementMethod,
   EditorHtmlToElementMethodProps,
@@ -10,8 +10,8 @@ export const soundEventHtmlToElement: EditorHtmlToElementMethod = ({
   element,
   children,
 }: EditorHtmlToElementMethodProps): SoundEvent => {
-  const mark = HtmlUtils.getDataAttribute(element, 'mark', '');
-  const src = HtmlUtils.getDataAttribute(element, 'src', '');
+  const mark = HTMLExtUtils.getDataAttribute(element, 'mark', '');
+  const src = HTMLExtUtils.getDataAttribute(element, 'src', '');
   return {
     type: SOUND_EVENT_TYPE,
     mark: mark,

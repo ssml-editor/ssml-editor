@@ -1,4 +1,4 @@
-import { HtmlUtils } from '@ssml-editor/core';
+import { HTMLExtUtils } from '@ssml-editor/core';
 import type {
   EditorElementToHtmlMethod,
   EditorElementToHtmlMethodProps,
@@ -11,7 +11,7 @@ export const phonemeElementToHtml: EditorElementToHtmlMethod = ({
   childrenHtml,
 }: EditorElementToHtmlMethodProps): string => {
   const { mark, alphabet, ph } = element as Phoneme;
-  return HtmlUtils.createElementAsString(
+  return HTMLExtUtils.createElementAsString(
     PHONEME_TYPE,
     true,
     false,

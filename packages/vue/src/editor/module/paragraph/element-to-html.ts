@@ -2,7 +2,7 @@ import type {
   EditorElementToHtmlMethod,
   EditorElementToHtmlMethodProps,
 } from '@/type';
-import { HtmlUtils } from '@ssml-editor/core';
+import { HTMLExtUtils } from '@ssml-editor/core';
 import {
   PARAGRAPH_HTML_NODE_NAME,
   PARAGRAPH_MARK,
@@ -12,7 +12,7 @@ import {
 export const paragraphElementToHtml: EditorElementToHtmlMethod = ({
   childrenHtml,
 }: EditorElementToHtmlMethodProps): string => {
-  return HtmlUtils.createElementAsString(
+  return HTMLExtUtils.createElementAsString(
     PARAGRAPH_HTML_NODE_NAME,
     PARAGRAPH_TYPE,
     false,

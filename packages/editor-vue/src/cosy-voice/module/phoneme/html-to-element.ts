@@ -1,4 +1,4 @@
-import { HtmlUtils } from '@ssml-editor/core';
+import { HTMLExtUtils } from '@ssml-editor/core';
 import type {
   EditorHtmlToElementMethod,
   EditorHtmlToElementMethodProps,
@@ -11,12 +11,12 @@ export const phonemeHtmlToElement: EditorHtmlToElementMethod = ({
   element,
   children,
 }: EditorHtmlToElementMethodProps): Phoneme => {
-  const mark = HtmlUtils.getDataAttribute(element, 'mark', '');
+  const mark = HTMLExtUtils.getDataAttribute(element, 'mark', '');
   const alphabet =
     Alphabet.fromString(
-      HtmlUtils.getDataAttribute(element, 'alphabet', 'py'),
+      HTMLExtUtils.getDataAttribute(element, 'alphabet', 'py'),
     ) || Alphabet.PY;
-  const ph = HtmlUtils.getDataAttribute(element, 'ph', '');
+  const ph = HTMLExtUtils.getDataAttribute(element, 'ph', '');
   return {
     type: PHONEME_TYPE,
     mark: mark,

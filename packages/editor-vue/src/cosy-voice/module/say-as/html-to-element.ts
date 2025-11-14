@@ -1,4 +1,4 @@
-import { HtmlUtils } from '@ssml-editor/core';
+import { HTMLExtUtils } from '@ssml-editor/core';
 import type {
   EditorHtmlToElementMethod,
   EditorHtmlToElementMethodProps,
@@ -11,10 +11,10 @@ export const sayAsHtmlToElement: EditorHtmlToElementMethod = ({
   element,
   children,
 }: EditorHtmlToElementMethodProps): SayAs => {
-  const mark = HtmlUtils.getDataAttribute(element, 'mark', '');
+  const mark = HTMLExtUtils.getDataAttribute(element, 'mark', '');
   const interpretAs =
     SayAsInterpretation.fromString(
-      HtmlUtils.getDataAttribute(element, 'interpret-as', 'id'),
+      HTMLExtUtils.getDataAttribute(element, 'interpret-as', 'id'),
     ) || SayAsInterpretation.ID;
   return {
     type: SAY_AS_TYPE,

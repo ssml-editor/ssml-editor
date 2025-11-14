@@ -1,4 +1,4 @@
-import { HtmlUtils } from '@ssml-editor/core';
+import { HTMLExtUtils } from '@ssml-editor/core';
 import type {
   EditorElementToHtmlMethod,
   EditorElementToHtmlMethodProps,
@@ -11,7 +11,7 @@ export const voiceElementToHtml: EditorElementToHtmlMethod = ({
   childrenHtml,
 }: EditorElementToHtmlMethodProps): string => {
   const { mark, name, effect = '' } = element as Voice;
-  return HtmlUtils.createElementAsString(
+  return HTMLExtUtils.createElementAsString(
     VOICE_TYPE,
     true,
     false,

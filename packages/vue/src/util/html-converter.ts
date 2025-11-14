@@ -4,7 +4,7 @@ import type {
   EditorElementToHtmlMethodProps,
   EditorHtmlToElementMethod,
 } from '@/type';
-import { HtmlUtils } from '@ssml-editor/core';
+import { HTMLExtUtils } from '@ssml-editor/core';
 import {
   Element as SlateElement,
   Text as SlateText,
@@ -78,7 +78,7 @@ export const HtmlConverter = {
       deserializer: EditorHtmlToElementMethod;
     }[],
   ): Descendant | null {
-    const type = HtmlUtils.getType(element, PARAGRAPH_TYPE);
+    const type = HTMLExtUtils.getType(element, PARAGRAPH_TYPE);
     const children = this.nodesToSlateNodes(
       [...element.childNodes],
       deserializers,

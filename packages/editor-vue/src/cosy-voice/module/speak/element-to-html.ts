@@ -1,4 +1,4 @@
-import { HtmlUtils } from '@ssml-editor/core';
+import { HTMLExtUtils } from '@ssml-editor/core';
 import type {
   EditorElementToHtmlMethod,
   EditorElementToHtmlMethodProps,
@@ -21,7 +21,7 @@ export const speakElementToHtml: EditorElementToHtmlMethod = ({
     bgmName,
     bgmVolume,
   } = element as Speak;
-  return HtmlUtils.createElementAsString(
+  return HTMLExtUtils.createElementAsString(
     SPEAK_HTML_NODE_NAME,
     SPEAK_TYPE,
     false,

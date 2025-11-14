@@ -1,4 +1,4 @@
-import { HtmlUtils } from '@ssml-editor/core';
+import { HTMLExtUtils } from '@ssml-editor/core';
 import type {
   EditorHtmlToElementMethod,
   EditorHtmlToElementMethodProps,
@@ -10,9 +10,9 @@ export const voiceHtmlToElement: EditorHtmlToElementMethod = ({
   element,
   children,
 }: EditorHtmlToElementMethodProps): Voice => {
-  const mark = HtmlUtils.getDataAttribute(element, 'mark', '');
-  const name = HtmlUtils.getDataAttribute(element, 'name', '');
-  const effect = HtmlUtils.getDataAttribute(element, 'effect', '');
+  const mark = HTMLExtUtils.getDataAttribute(element, 'mark', '');
+  const name = HTMLExtUtils.getDataAttribute(element, 'name', '');
+  const effect = HTMLExtUtils.getDataAttribute(element, 'effect', '');
   return {
     type: VOICE_TYPE,
     mark: mark,
