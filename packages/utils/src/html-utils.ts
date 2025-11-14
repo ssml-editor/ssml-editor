@@ -75,7 +75,7 @@ function getAttribute(
   return value || defaultValue;
 }
 
-export const HtmlUtils = {
+export const HTMLUtils = {
   createElementAsString,
   getAttribute,
 };
