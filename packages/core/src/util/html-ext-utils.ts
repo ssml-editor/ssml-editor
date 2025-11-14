@@ -1,4 +1,4 @@
-import { HtmlUtils as OHtmlUtils } from '@ssml-editor/utils';
+import { HTMLUtils } from '@ssml-editor/utils';
 
 function createElementAsString(
   nodeName: string,
@@ -51,7 +51,7 @@ function createElementAsString(
       nodeName = 'div';
     }
   }
-  return OHtmlUtils.createElementAsString(
+  return HTMLUtils.createElementAsString(
     nodeName,
     {
       'data-s-e-type': type as string,
@@ -92,7 +92,7 @@ function getDataAttribute(
   attributeName: string,
   defaultValue?: string | number | boolean,
 ): string | number | boolean | undefined {
-  return OHtmlUtils.getAttribute(
+  return HTMLUtils.getAttribute(
     element,
     `data-${attributeName}`,
     defaultValue as any,
@@ -102,14 +102,14 @@ function getDataAttribute(
 function getType(element: Element): string | undefined;
 function getType(element: Element, defaultValue: string): string;
 function getType(element: Element, defaultValue?: string): string | undefined {
-  return OHtmlUtils.getAttribute(
+  return HTMLUtils.getAttribute(
     element,
-    HtmlUtils.typeKey,
+    HTMLExtUtils.typeKey,
     defaultValue as any,
   );
 }
 
-export const HtmlUtils = {
+export const HTMLExtUtils = {
   typeKey: 'data-s-e-type',
   voidKey: 'data-s-e-void',
   inlineKey: 'data-s-e-inline',
@@ -117,9 +117,9 @@ export const HtmlUtils = {
   getDataAttribute,
   getType,
   isVoid(element: Element): boolean {
-    return OHtmlUtils.getAttribute(element, this.voidKey, false);
+    return HTMLUtils.getAttribute(element, this.voidKey, false);
   },
   isInline(element: Element): boolean {
-    return OHtmlUtils.getAttribute(element, this.inlineKey, false);
+    return HTMLUtils.getAttribute(element, this.inlineKey, false);
   },
 };
