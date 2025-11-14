@@ -1,4 +1,3 @@
-import { StorageType } from '@ssml-editor/core';
 import {
   AliasMenu,
   BreakMenu,
@@ -13,6 +12,7 @@ import {
   PhonemeModule,
   PinyinMenu,
   RedoMenu,
+  RowContainerAlign,
   SaveMenu,
   SayAsMenu,
   SayAsModule,
@@ -24,26 +24,24 @@ import {
   SpeakNormalizer,
   speakPitcheData,
   speakRateData,
+  StorageType,
   SubmitMenu,
   SubModule,
+  ToolbarDivider,
   UndoMenu,
   VoiceMenu,
   voidElementPlugin,
+  type BaseEditor,
   type BgmProps,
+  type EditorConfig,
   type SayAsProps,
   type SoundEventProps,
   type SpeakProps,
   type SubmitProps,
+  type ToolbarDividerProps,
   type ValidateMethod,
   type VoiceProps,
 } from '@ssml-editor/editor-vue';
-import {
-  RowContainerAlign,
-  ToolbarDivider,
-  type BaseEditor,
-  type EditorConfig,
-  type ToolbarDividerProps,
-} from '@ssml-editor/vue';
 import { Api } from './api';
 
 const sayAsValidateMethod: ValidateMethod = (text, defaultValidateMethod) =>

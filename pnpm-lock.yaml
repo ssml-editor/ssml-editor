@@ -225,18 +225,9 @@ importers:
 
   example:
     dependencies:
-      '@ssml-editor/base':
-        specifier: workspace:^
-        version: link:../packages/base
-      '@ssml-editor/core':
-        specifier: workspace:^
-        version: link:../packages/core
       '@ssml-editor/editor-vue':
         specifier: workspace:^
         version: link:../packages/editor-vue
-      '@ssml-editor/vue':
-        specifier: workspace:^
-        version: link:../packages/vue
       axios:
         specifier: ^1.13.2
         version: 1.13.2

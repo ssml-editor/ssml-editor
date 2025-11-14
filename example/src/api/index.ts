@@ -1,9 +1,9 @@
-import type { LabelValue } from '@ssml-editor/core';
 import type {
   Bgm,
   FetchBgmParams,
   FetchSoundParams,
   FetchVoiceParams,
+  LabelValue,
   ResponseVoice,
   SearchBgmParams,
   SearchSoundParams,

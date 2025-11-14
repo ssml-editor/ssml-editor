@@ -40,10 +40,7 @@
     "rm:dist": "rimraf dist"
   },
   "dependencies": {
-    "@ssml-editor/base": "workspace:^",
-    "@ssml-editor/core": "workspace:^",
     "@ssml-editor/editor-vue": "workspace:^",
-    "@ssml-editor/vue": "workspace:^",
     "axios": "^1.13.2",
     "axios-mock-adapter": "^2.1.0",
     "element-plus": "catalog:",

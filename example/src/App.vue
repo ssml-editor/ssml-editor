@@ -8,8 +8,7 @@
 </template>
 
 <script setup lang="ts">
-import type { Warning } from '@ssml-editor/base';
-import { type BaseEditor, Editor } from '@ssml-editor/vue';
+import { type BaseEditor, type Warning, Editor } from '@ssml-editor/editor-vue';
 import { ElMessage } from 'element-plus';
 import type { Operation } from 'slate-vue3/core';
 import { useTemplateRef } from 'vue';

@@ -1,4 +1,4 @@
-import type { LabelValue } from '@ssml-editor/core';
+import type { LabelValue } from '@ssml-editor/editor-vue';
 
 export default <LabelValue[]>[
   {
