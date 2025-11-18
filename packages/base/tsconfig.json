@@ -6,5 +6,10 @@
       "@/*": ["./src/*"]
     }
   },
-  "include": ["src/**/*.ts", "vite.config.ts"]
+  "include": [
+    "../../common/**/*.ts",
+    "src/**/*.ts",
+    "vite.config.bundle.ts",
+    "vite.config.modules.ts"
+  ]
 }

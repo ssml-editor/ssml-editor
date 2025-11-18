@@ -2,6 +2,9 @@ node_modules/*
 docs/
 public/
 dist/
+build/
+es/
+cjs/
 *.html
 *.d.ts
 .eslintrc.js

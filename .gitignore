@@ -13,6 +13,8 @@ node_modules
 dist
 dist-ssr
 build
+es
+cjs
 coverage
 *.local
 

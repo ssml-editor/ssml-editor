@@ -15,25 +15,28 @@
   "type": "module",
   "exports": {
     ".": {
-      "import": "./dist/index.es.js",
-      "types": "./dist/types/index.d.ts",
-      "require": "./dist/index.cjs.js"
+      "import": "./es/index.js",
+      "types": "./es/index.d.ts",
+      "require": "./cjs/index.js"
     }
   },
-  "main": "./dist/index.cjs.js",
-  "module": "./dist/index.es.js",
-  "unpkg": "./dist/index.umd.js",
-  "jsdelivr": "dist/index.umd.js",
-  "types": "./dist/types/index.d.ts",
+  "main": "cjs/index.js",
+  "module": "es/index.js",
+  "unpkg": "dist/index.full.umd.js",
+  "jsdelivr": "dist/index.full.umd.js",
+  "types": "es/index.d.ts",
   "files": [
-    "dist"
+    "dist",
+    "es",
+    "cjs"
   ],
   "scripts": {
-    "start": "pnpm build",
-    "build": "pnpm rm:dist && pnpm type-check && pnpm build-only",
-    "build-only": "vite build --mode production",
+    "start": "pnpm run build",
+    "build": "pnpm run rm && pnpm run type-check && pnpm run build:bundle && pnpm run build:modules",
+    "build:bundle": "vite build --config vite.config.bundle.ts --mode production",
+    "build:modules": "vite build --config vite.config.modules.ts --mode production",
     "type-check": "vue-tsc --noEmit --composite false",
-    "rm:dist": "rimraf dist"
+    "rm": "rimraf cjs dist es"
   },
   "dependencies": {
     "howler": "^2.2.4",
@@ -42,9 +45,12 @@
     "typescript-event-emitter": "^2.1.0"
   },
   "devDependencies": {
+    "@rollup/plugin-terser": "catalog:",
     "@types/howler": "^2.2.12",
     "@types/node": "catalog:",
+    "glob": "catalog:",
     "rimraf": "catalog:",
+    "rollup": "catalog:",
     "typescript": "catalog:",
     "vite": "catalog:",
     "vite-plugin-dts": "catalog:",

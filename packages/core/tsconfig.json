@@ -7,12 +7,12 @@
     }
   },
   "include": [
-    "src/**/*.ts",
-    "src/**/*.tsx",
-    "src/**/*.vue",
+    "../../common/**/*.ts",
+    "src/**/*.{ts,tsx,vue}",
     "types/*.d.ts",
     "postcss.config.ts",
     "tailwind.config.ts",
-    "vite.config.ts"
+    "vite.config.bundle.ts",
+    "vite.config.modules.ts"
   ]
 }
