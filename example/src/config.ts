@@ -30,6 +30,7 @@ import {
   ToolbarDivider,
   UndoMenu,
   VoiceMenu,
+  VoiceMenuService,
   voidElementPlugin,
   type BaseEditor,
   type BgmProps,
@@ -192,12 +193,17 @@ export default <EditorConfig>{
       {
         component: SubmitMenu,
         props: <SubmitProps>{
-          onClick: (
+          onClick: async (
             code: string,
             editor?: BaseEditor,
             config?: EditorConfig,
           ) => {
-            console.log('onClick', code, editor, config);
+            console.log('SubmitMenuOnClick', code, editor, config);
+            if (editor && config) {
+              const voiceMenuService = new VoiceMenuService(editor, config);
+              const voiceData = await voiceMenuService.readConfig();
+              console.log('SubmitMenuOnClick', voiceData);
+            }
           },
         },
       },
