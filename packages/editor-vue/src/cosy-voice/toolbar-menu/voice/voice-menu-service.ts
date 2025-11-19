@@ -14,7 +14,7 @@ export class VoiceMenuService extends MenuBaseService {
     this._editorStorageService = new EditorStorageService(config.databaseName);
   }
 
-  async fetchConfig(): Promise<VoiceContentDataModel | undefined> {
+  async readConfig(): Promise<VoiceContentDataModel | undefined> {
     return await this._editorStorageService.read(VoiceMenuService.STORE_KEY);
   }
 

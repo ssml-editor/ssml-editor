@@ -43,7 +43,7 @@ async function menuClickHandler() {
   const { config, editor } = props;
   if (config && editor) {
     voiceMenuService.value ??= new VoiceMenuService(editor, config);
-    const data = await voiceMenuService.value.fetchConfig();
+    const data = await voiceMenuService.value.readConfig();
     data && (voiceContentData.value = data);
     show();
   }
