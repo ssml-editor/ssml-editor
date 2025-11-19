@@ -1,6 +1,5 @@
 import type {
   EditorDecorate,
-  EditorExt,
   EditorModule,
   EditorNormalization,
   EditorPlugin,
@@ -31,7 +30,6 @@ export interface EditorConfig {
   footer?: EditorFooterConfig;
   plugins?: EditorPlugin[];
   modules?: EditorModule[];
-  ext?: EditorExt;
   decorate?: EditorDecorate;
   renderLeaf?: EditorRenderLeaf;
   renderText?: EditorRenderText;

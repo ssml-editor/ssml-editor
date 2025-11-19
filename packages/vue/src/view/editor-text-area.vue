@@ -91,7 +91,7 @@ const editorStyle = {
     config.style?.height && config.scroll !== false
       ? config.style.height
       : 'auto',
-}
+};
 const editorService = new EditorService(config.databaseName, config.html);
 
 const htmlSerializers =
@@ -157,10 +157,7 @@ const editor = applyPlugins(
   withMaxLength(
     withHtml(
       withSerialization(
-        withExt(
-          withEvent(withHistory(withDOM(createEditor()))),
-          config.ext || {},
-        ),
+        withExt(withEvent(withHistory(withDOM(createEditor())))),
         serializers,
         normalizers,
       ),
