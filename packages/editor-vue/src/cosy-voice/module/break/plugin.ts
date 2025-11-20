@@ -6,7 +6,9 @@ import {
 import type { Element } from 'slate-vue3/core';
 import { BREAK_TYPE } from './constant';
 
-export const breakPlugin: EditorPlugin = (editor: BaseEditor): BaseEditor => {
+export const breakPlugin: EditorPlugin = <T extends BaseEditor>(
+  editor: T,
+): T => {
   const { isInline, isVoid } = editor;
   const newEditor = editor;
 

@@ -7,7 +7,7 @@ import {
 import type { Element, Node } from 'slate-vue3/core';
 import { SUB_TYPE } from './constant';
 
-export const subPlugin: EditorPlugin = (editor: BaseEditor): BaseEditor => {
+export const subPlugin: EditorPlugin = <T extends BaseEditor>(editor: T): T => {
   const { isInline, isVoid, insertNode } = editor;
   const newEditor = editor;
 

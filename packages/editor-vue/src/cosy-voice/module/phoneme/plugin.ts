@@ -7,7 +7,9 @@ import {
 import type { Element, Node } from 'slate-vue3/core';
 import { PHONEME_TYPE } from './constant';
 
-export const phonemePlugin: EditorPlugin = (editor: BaseEditor): BaseEditor => {
+export const phonemePlugin: EditorPlugin = <T extends BaseEditor>(
+  editor: T,
+): T => {
   const { isInline, isVoid, insertNode } = editor;
   const newEditor = editor;
 

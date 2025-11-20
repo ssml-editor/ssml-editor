@@ -6,7 +6,9 @@ import {
 import type { Element } from 'slate-vue3/core';
 import { VOICE_TYPE } from './constant';
 
-export const voicePlugin: EditorPlugin = (editor: BaseEditor): BaseEditor => {
+export const voicePlugin: EditorPlugin = <T extends BaseEditor>(
+  editor: T,
+): T => {
   const { isInline, isVoid } = editor;
   const newEditor = editor;
 

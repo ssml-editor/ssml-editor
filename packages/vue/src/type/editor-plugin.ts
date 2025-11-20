@@ -1,3 +1,3 @@
-import type { BaseEditor } from "./base-editor";
+import type { BaseEditor } from './base-editor';
 
-export type EditorPlugin = (editor: BaseEditor) => BaseEditor;
+export type EditorPlugin = <T extends BaseEditor>(editor: T) => T;

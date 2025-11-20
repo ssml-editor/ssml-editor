@@ -6,9 +6,9 @@ import {
 import type { Element } from 'slate-vue3/core';
 import { SOUND_EVENT_TYPE } from './constant';
 
-export const soundEventPlugin: EditorPlugin = (
-  editor: BaseEditor,
-): BaseEditor => {
+export const soundEventPlugin: EditorPlugin = <T extends BaseEditor>(
+  editor: T,
+): T => {
   const { isInline, isVoid } = editor;
   const newEditor = editor;
 

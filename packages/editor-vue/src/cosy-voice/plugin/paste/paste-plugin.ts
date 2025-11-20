@@ -8,7 +8,9 @@ import {
   type EditorPlugin,
 } from '@ssml-editor/vue';
 
-export const pastePlugin: EditorPlugin = (editor: BaseEditor): BaseEditor => {
+export const pastePlugin: EditorPlugin = <T extends BaseEditor>(
+  editor: T,
+): T => {
   const { insertData } = editor;
 
   const newEditor = editor;

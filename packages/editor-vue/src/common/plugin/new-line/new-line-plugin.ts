@@ -1,6 +1,8 @@
 import { type BaseEditor, type EditorPlugin } from '@ssml-editor/vue';
 
-export const newLinePlugin: EditorPlugin = (editor: BaseEditor): BaseEditor => {
+export const newLinePlugin: EditorPlugin = <T extends BaseEditor>(
+  editor: T,
+): T => {
   const { insertText } = editor;
 
   const newEditor = editor;

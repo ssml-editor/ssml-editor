@@ -19,7 +19,9 @@ function setTextFromPlaceholder(htmlElement: HTMLDivElement | null) {
   }
 }
 
-export const speakPlugin: EditorPlugin = (editor: BaseEditor): BaseEditor => {
+export const speakPlugin: EditorPlugin = <T extends BaseEditor>(
+  editor: T,
+): T => {
   const { isInline, isVoid } = editor;
   const newEditor = editor;
 

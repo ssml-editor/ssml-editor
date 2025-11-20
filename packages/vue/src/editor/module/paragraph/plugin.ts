@@ -3,9 +3,9 @@ import { NodeUtils } from '@/util';
 import type { Element } from 'slate-vue3/core';
 import { PARAGRAPH_TYPE } from './constant';
 
-export const paragraphPlugin: EditorPlugin = (
-  editor: BaseEditor,
-): BaseEditor => {
+export const paragraphPlugin: EditorPlugin = <T extends BaseEditor>(
+  editor: T,
+): T => {
   const { isInline, isVoid } = editor;
   const newEditor = editor;
 
