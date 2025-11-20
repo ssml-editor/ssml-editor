@@ -19,6 +19,6 @@ const { width, height, marginLeft, marginRight, backgroundColor } =
 @reference "tailwindcss";
 
 .se-toolbar-divider {
-  @apply overflow-hidden w-0.75 h-10 ml-2 mr-2 bg-gray-300;
+  @apply shrink-0 overflow-hidden w-0.75 h-10 ml-2 mr-2 bg-gray-300;
 }
 </style>

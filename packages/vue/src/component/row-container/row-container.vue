@@ -47,6 +47,6 @@ const { align = RowContainerAlign.CENTER } = defineProps<{
     @apply justify-evenly;
   }
 
-  @apply flex flex-row items-center pt-1 pb-1;
+  @apply flex flex-row flex-wrap items-center pt-1 pb-1;
 }
 </style>

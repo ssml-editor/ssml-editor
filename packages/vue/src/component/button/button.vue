@@ -43,6 +43,6 @@ function buttonClickHandler() {
     @apply text-sm mt-1;
   }
 
-  @apply border-0 border-none bg-transparent flex flex-col justify-center items-center rounded-sm pt-2 pb-2 pr-2 pl-2;
+  @apply whitespace-nowrap border-0 border-none bg-transparent flex flex-col justify-center items-center shrink-0 rounded-sm pt-2 pb-2 pr-2 pl-2;
 }
 </style>
