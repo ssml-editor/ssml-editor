@@ -4,10 +4,10 @@
   --color-li-hover-bg: var(--color-hover-bg);
   --color-button-hover-bg: var(--color-hover-bg);
 
-  --editor-text-area-padding-left: 0.5rem;
-  --editor-text-area-padding-right: 0.5rem;
-  --editor-text-area-padding-top: 0.5rem;
-  --editor-text-area-padding-bottom: 2rem;
+  --editor-text-area-padding-left: 1rem;
+  --editor-text-area-padding-right: 1rem;
+  --editor-text-area-padding-top: 0;
+  --editor-text-area-padding-bottom: 1.5rem;
   --editor-text-area-box-shadow: 0 0 6px 0
     var(--tw-shadow-color, rgb(0, 0, 0, 0.1));
 
