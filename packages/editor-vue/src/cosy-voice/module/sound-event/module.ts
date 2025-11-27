@@ -7,7 +7,6 @@ import { soundEventRenderElement } from './render-element';
 import { soundEventSerializer } from './serializer';
 
 export const SoundEventModule: EditorModule = {
-  name: 'sound-event',
   type: SOUND_EVENT_TYPE,
   renderElement: soundEventRenderElement,
   elementToHtml: soundEventElementToHtml,

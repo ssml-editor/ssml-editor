@@ -7,7 +7,6 @@ import { phonemeRenderElement } from './render-element';
 import { phonemeSerializer } from './serializer';
 
 export const PhonemeModule: EditorModule = {
-  name: 'phoneme',
   type: PHONEME_TYPE,
   renderElement: phonemeRenderElement,
   elementToHtml: phonemeElementToHtml,

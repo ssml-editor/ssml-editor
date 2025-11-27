@@ -7,7 +7,6 @@ import { paragraphRenderElement } from './render-element';
 import { paragraphSerializer } from './serializer';
 
 export const ParagraphModule: EditorModule = {
-  name: 'paragraph',
   type: PARAGRAPH_TYPE,
   renderElement: paragraphRenderElement,
   elementToHtml: paragraphElementToHtml,

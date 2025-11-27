@@ -34,7 +34,6 @@ export type EditorSerializationMethod = <T extends BaseElement>(
 ) => string;
 
 export type EditorModule = {
-  name: string;
   type: string;
   renderElement?: EditorRenderElementMethod;
   elementToHtml?: EditorElementToHtmlMethod;

@@ -7,7 +7,6 @@ import { speakRenderElement } from './render-element';
 import { speakSerializer } from './serializer';
 
 export const SpeakModule: EditorModule = {
-  name: 'speak',
   type: SPEAK_TYPE,
   renderElement: speakRenderElement,
   elementToHtml: speakElementToHtml,

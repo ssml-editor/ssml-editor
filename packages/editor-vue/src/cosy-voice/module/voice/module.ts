@@ -7,7 +7,6 @@ import { voiceRenderElement } from './render-element';
 import { voiceSerializer } from './serializer';
 
 export const VoiceModule: EditorModule = {
-  name: 'voice',
   type: VOICE_TYPE,
   renderElement: voiceRenderElement,
   elementToHtml: voiceElementToHtml,
