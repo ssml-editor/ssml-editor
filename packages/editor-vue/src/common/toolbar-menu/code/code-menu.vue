@@ -74,9 +74,13 @@ function menuClickHandler() {
 
 .se-code-wrapper {
   :deep(> pre) {
+    code.hljs {
+      @apply max-h-[50dvh] overflow-auto;
+    }
+
     @apply my-[0];
   }
 
-  @apply border border-solid border-gray-200 rounded-sm overflow-x-auto overflow-y-auto whitespace-pre-wrap max-h-[50dvh];
+  @apply border border-solid border-gray-200 rounded-sm whitespace-pre-wrap;
 }
 </style>
