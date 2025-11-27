@@ -7,7 +7,6 @@ import { breakRenderElement } from './render-element';
 import { breakSerializer } from './serializer';
 
 export const BreakModule: EditorModule = {
-  name: 'break',
   type: BREAK_TYPE,
   renderElement: breakRenderElement,
   elementToHtml: breakElementToHtml,

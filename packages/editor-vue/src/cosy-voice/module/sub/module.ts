@@ -7,7 +7,6 @@ import { subRenderElement } from './render-element';
 import { subSerializer } from './serializer';
 
 export const SubModule: EditorModule = {
-  name: 'sub',
   type: SUB_TYPE,
   renderElement: subRenderElement,
   elementToHtml: subElementToHtml,

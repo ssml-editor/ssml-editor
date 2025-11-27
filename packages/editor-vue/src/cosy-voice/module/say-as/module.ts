@@ -7,7 +7,6 @@ import { sayAsRenderElement } from './render-element';
 import { sayAsSerializer } from './serializer';
 
 export const SayAsModule: EditorModule = {
-  name: 'say-as',
   type: SAY_AS_TYPE,
   renderElement: sayAsRenderElement,
   elementToHtml: sayAsElementToHtml,
