@@ -154,6 +154,16 @@ const config: Config = {
       maxHeadingLevel: 5,
     },
   } satisfies Preset.ThemeConfig,
+  plugins: [
+    [
+      '@docusaurus/plugin-ideal-image',
+      {
+        quality: 85,
+        sizes: [3840, 3440, 2560, 1920, 1600, 1440, 1280, 1024, 800],
+        disableInDev: false,
+      },
+    ],
+  ],
 };
 
 export default config;
