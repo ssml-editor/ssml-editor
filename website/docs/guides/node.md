@@ -12,7 +12,7 @@ SSML Editor is an extension of the Slate Vue3 component, developed based on Slat
 
 ## Quick Start
 
-To quickly understand the data structure of various nodes, please visit the [online example](/example) page. After manipulating the editor content, click the **Submit** button to view the Nodes structure output in the browser console.
+To quickly understand the data structure of various nodes, please visit the [online example](https://www.ssmleditor.com/example/) page. After manipulating the editor content, click the **Submit** button to view the Nodes structure output in the browser console.
 
 For example, write a text segment, insert an sound element, or set a polyphonic word - you can see their data structures by checking console print `editor.children`.
 

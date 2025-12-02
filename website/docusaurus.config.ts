@@ -91,7 +91,7 @@ const config: Config = {
           label: 'Tutorial',
         },
         {
-          href: '/example',
+          href: 'https://www.ssmleditor.com/example/',
           label: 'Example',
           target: '_blank',
           position: 'left',
