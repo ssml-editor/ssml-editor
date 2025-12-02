@@ -1,4 +1,4 @@
-name: Publish SSMLEditor Library
+name: Publish SSML Editor Library
 on:
   workflow_dispatch:
   push:
@@ -36,6 +36,6 @@ jobs:
 
       # 6. 发布到 Npm
       - name: Publish all packages to npm
-        run: pnpm -r publish --tag=next --force --report-summary --access public
+        run: pnpm -r publish --tag=next --force --report-summary --access public --no-git-checks
         env:
           NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }} # 使用Github配置的 NPM_TOKEN

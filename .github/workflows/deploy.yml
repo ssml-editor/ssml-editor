@@ -1,4 +1,4 @@
-name: Deploy SSMLEditor Library Example
+name: Deploy SSML Editor Library Example
 on:
   workflow_dispatch:
   push:

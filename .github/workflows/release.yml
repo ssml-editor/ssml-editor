@@ -1,4 +1,4 @@
-name: Release SSMLEditor Library
+name: Release SSML Editor Library
 on:
   workflow_dispatch:
   push:
