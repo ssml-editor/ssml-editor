@@ -186,7 +186,7 @@ export default <EditorConfig>{
         component: CodeMenu,
       },
     ],
-    align: RowContainerAlign.CENTER,
+    align: RowContainerAlign.START,
   },
   footer: {
     menus: [
@@ -198,6 +198,7 @@ export default <EditorConfig>{
             editor?: BaseEditor,
             config?: EditorConfig,
           ) => {
+            console.log('Nodes', editor?.children);
             console.log('SubmitMenuOnClick', code, editor, config);
             if (editor && config) {
               const voiceMenuService = new VoiceMenuService(editor, config);
