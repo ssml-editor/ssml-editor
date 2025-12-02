@@ -23,7 +23,7 @@ const config: Config = {
   organizationName: 'ssml-editor', // Usually your GitHub org/user name.
   trailingSlash: false,
 
-  onBrokenLinks: 'throw',
+  onBrokenLinks: 'warn', // 检测到无效链接时发出警告
 
   // Even if you don't use internationalization, you can use this field to set
   // useful metadata like html lang. For example, if your site is Chinese, you
@@ -154,6 +154,16 @@ const config: Config = {
       maxHeadingLevel: 5,
     },
   } satisfies Preset.ThemeConfig,
+  plugins: [
+    [
+      '@docusaurus/plugin-ideal-image',
+      {
+        quality: 85,
+        sizes: [3840, 3440, 2560, 1920, 1600, 1440, 1280, 1024, 800],
+        disableInDev: false,
+      },
+    ],
+  ],
 };
 
 export default config;

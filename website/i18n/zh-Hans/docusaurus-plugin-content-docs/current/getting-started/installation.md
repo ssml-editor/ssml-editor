@@ -1,0 +1,139 @@
+---
+sidebar_position: 1
+---
+
+# 安装流程
+
+## 本地安装基于 Vue3 的 SSML Editor
+
+:::info 前提条件
+
+- 熟悉命令行
+
+- 已安装 `^20.19.0 || >=22.12.0` 版本的 [Node.js](https://nodejs.org/en/download/)
+  - 安装 Node.js 时，建议勾选所有和依赖相关的选项。
+
+- 创建 Vue3 项目，详细教程请转至官网（[https://cn.vuejs.org/guide/quick-start.html](https://cn.vuejs.org/guide/quick-start.html)）
+
+:::
+
+在本节中，我们将介绍如何在本地安装基于 Vue3 的 SSML Editor。
+
+如果您需要使用内置的工具栏、插件、底部栏或阿里云 CosyVoice 支持的 SSML 语法所需的转换功能，请参考以下标准安装。如果您需要使用其它语音模型支持的 SSML 语法所需的转换功能请参考以下简洁安装，自行实现相关模组、工具栏、插件等。
+
+### 标准安装
+
+:::info 标准安装
+
+- 内置通用工具栏、插件、底部栏和阿里云 CosyVoice 支持的 SSML 语法所需的转换模组、工具栏、插件、标准化器等。
+
+- 依赖于 **Element Plus**，如未安装请手动安装，详细教程请转至官网（[https://element-plus.org/zh-CN/guide/installation](https://element-plus.org/zh-CN/guide/installation)）。
+
+:::
+
+运行安装命令：
+
+```bash npm2yarn
+npm install @ssml-editor/editor-vue --save
+```
+
+### 简洁安装
+
+:::info 简洁安装
+
+- 无任何内置，空白的编辑器，需要自行实现模组、工具栏、插件等。
+
+- 无需安装 Element Plus。
+
+:::
+
+运行安装命令：
+
+```bash npm2yarn
+npm install @ssml-editor/vue --save
+```
+
+### 使用组件
+
+:::info 使用组件
+
+以下代码演示基于标准安装方式
+
+:::
+
+在您要使用 SSML Editor 组件的页面插入以下代码：
+
+<details>
+
+<summary>查看完整示例</summary>
+
+```ts showLineNumbers
+<template>
+  <Editor :config="config"></Editor>
+</template>
+
+<script setup lang="ts">
+import '@ssml-editor/editor-vue/styles/highlight/github-dark-dimmed.css';
+import '@ssml-editor/editor-vue/styles/style.css';
+import { StorageType } from '@ssml-editor/core';
+import {
+  CodeMenu,
+  CopyMenu,
+  ExportMenu,
+  SaveMenu,
+  SubmitMenu,
+  type SubmitProps
+} from '@ssml-editor/editor-vue';
+import {
+  Editor, RowContainerAlign, type BaseEditor,
+  type EditorConfig
+} from '@ssml-editor/vue';
+
+const config = <EditorConfig>{
+  placeholder: 'Please enter content...',
+  animation: { grayscale: true, zoom: true },
+  html: {
+    storageType: StorageType.LOCAL,
+  },
+  toolbar: {
+    menus: [
+      {
+        component: SaveMenu,
+      },
+      {
+        component: ExportMenu,
+      },
+      {
+        component: CopyMenu,
+      },
+      {
+        component: CodeMenu,
+      },
+    ],
+    align: RowContainerAlign.CENTER,
+  },
+  footer: {
+    menus: [
+      {
+        component: SubmitMenu,
+        props: <SubmitProps>{
+          onClick: (
+            code: string,
+            editor?: BaseEditor,
+            config?: EditorConfig,
+          ) => {
+            console.log('onClick', code, editor, config);
+          },
+        },
+      },
+    ],
+    align: RowContainerAlign.END,
+    style: {
+      marginTop: 'calc(var(--spacing, .25rem) * 2)',
+    },
+  },
+};
+</script>
+```
+
+</details>

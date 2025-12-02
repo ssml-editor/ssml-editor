@@ -359,7 +359,7 @@
     "description": "Homepage feature item with title easy to extend"
   },
   "homepage.feature.easy-to-extend.description": {
-    "message": "为开发者提供完善的扩展能力：可配置菜单、模块和插件、标准化和序列化接口，让开发更高效、更自由。",
+    "message": "为开发者提供完善的扩展能力：可配置菜单、模组和插件、标准化和序列化接口，让开发更高效、更自由。",
     "description": "Homepage feature item with description easy to extend"
   }
 }
