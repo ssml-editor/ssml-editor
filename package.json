@@ -16,7 +16,7 @@
     "slate",
     "slate-editor"
   ],
-  "packageManager": "pnpm@10.22.0",
+  "packageManager": "pnpm@10.24.0",
   "workspaces": [
     "packages/*",
     "example",
@@ -24,7 +24,7 @@
   ],
   "engines": {
     "node": ">=22.12.0",
-    "pnpm": ">=10.22.0"
+    "pnpm": ">=10.24.0"
   },
   "scripts": {
     "start": "pnpm dev:website",
@@ -58,14 +58,14 @@
     "@highlightjs/vue-plugin": "^2.1.0",
     "@popperjs/core": "^2.11.8",
     "@types/lodash": "catalog:",
-    "@vueuse/core": "^14.0.0",
+    "@vueuse/core": "^14.1.0",
     "cmu-pronouncing-dictionary": "^3.0.0",
     "file-saver": "^2.0.5",
     "highlight.js": "^11.11.1",
     "howler": "^2.2.4",
     "is-what": "^5.5.0",
     "localforage": "^1.10.0",
-    "lodash": "^4.17.21",
+    "lodash": "catalog:",
     "mathjs": "^15.1.0",
     "pinyin-pro": "^3.27.0",
     "pinyinize": "^3.3.1",
@@ -88,11 +88,11 @@
     "csstype": "catalog:",
     "element-plus": "catalog:",
     "eslint": "^9.39.1",
-    "eslint-plugin-vue": "^10.5.1",
+    "eslint-plugin-vue": "^10.6.2",
     "glob": "catalog:",
     "postcss": "catalog:",
     "postcss-nested": "catalog:",
-    "prettier": "^3.6.2",
+    "prettier": "^3.7.3",
     "rimraf": "catalog:",
     "rollup": "catalog:",
     "rollup-plugin-copy": "catalog:",
