@@ -1,6 +1,6 @@
 {
   "name": "@ssml-editor/website",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "private": true,
   "description": "SSML editor demo website",
   "homepage": "https://www.ssmleditor.com",

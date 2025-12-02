@@ -1,7 +1,7 @@
 {
   "name": "@ssml-editor/ssml-editor",
   "private": true,
-  "version": "1.0.1",
+  "version": "1.0.2",
   "homepage": "https://www.ssmleditor.com",
   "repository": {
     "type": "git",
