@@ -30,7 +30,8 @@ import {
   ToolbarDivider,
   UndoMenu,
   VoiceMenu,
-  VoiceMenuService,
+  VoiceMenuUtils,
+  VoiceStorageType,
   voidElementPlugin,
   type BaseEditor,
   type BgmProps,
@@ -63,6 +64,7 @@ export default <EditorConfig>{
       {
         component: VoiceMenu,
         props: <VoiceProps>{
+          storageType: VoiceStorageType.NONE,
           fetchVoices: Api.fetchVoices,
           fetchCategories: Api.fetchVoiceCategories,
           searchVoices: Api.searchVoices,
@@ -193,16 +195,13 @@ export default <EditorConfig>{
       {
         component: SubmitMenu,
         props: <SubmitProps>{
-          onClick: async (
-            code: string,
-            editor?: BaseEditor,
-            config?: EditorConfig,
-          ) => {
-            console.log('Nodes', editor?.children);
-            console.log('SubmitMenuOnClick', code, editor, config);
+          onClick: async (editor?: BaseEditor, config?: EditorConfig) => {
             if (editor && config) {
-              const voiceMenuService = new VoiceMenuService(editor, config);
-              const voiceData = await voiceMenuService.readConfig();
+              console.log('Nodes', editor?.children);
+              const text = editor.getText();
+              const code = editor.serializeAndNormalize().join('');
+              console.log('SubmitMenuOnClick', text, code, editor, config);
+              const voiceData = await VoiceMenuUtils.getData(editor);
               console.log('SubmitMenuOnClick', voiceData);
             }
           },
