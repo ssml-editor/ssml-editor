@@ -12,10 +12,7 @@ const { editor, config, onClick } = defineProps<
 >();
 
 async function submitHandler() {
-  if (editor) {
-    const code = editor.serializeAndNormalize().join('');
-    onClick && onClick(code, editor, config);
-  }
+  onClick && onClick(editor, config);
 }
 </script>
 
