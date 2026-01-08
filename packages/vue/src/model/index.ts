@@ -7,3 +7,4 @@ export * from './ext-editor';
 export * from './html-editor';
 export * from './max-length-editor';
 export * from './serialization-editor';
+export * from './text-editor';

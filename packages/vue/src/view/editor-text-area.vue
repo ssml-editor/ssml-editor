@@ -23,6 +23,7 @@ import {
   withHtml,
   withMaxLength,
   withSerialization,
+  withText,
 } from '@/extension';
 import type { BaseElement, EditorConfig } from '@/model';
 import {
@@ -157,7 +158,7 @@ const editor = applyPlugins(
   withMaxLength(
     withHtml(
       withSerialization(
-        withExt(withEvent(withHistory(withDOM(createEditor())))),
+        withText(withExt(withEvent(withHistory(withDOM(createEditor()))))),
         serializers,
         normalizers,
       ),
