@@ -8,7 +8,7 @@
       </el-input>
     </el-form>
     <div class="se-voice-content-search-result" v-if="showSearchResult">
-      <select-list v-model="searchVoiceId" :data-list="searchVoiceDataList">
+      <select-list v-model="searchSelectedVoice.value" :data-list="searchVoiceDataList">
         <template #default="{ model, dataList }">
           <p class="se-voice-item" :class="{ activated: item.value === model }" :title="item.label"
             v-for="(item, index) in dataList" :key="index" @click="voiceSearchSelectHandler(item)">
@@ -21,11 +21,11 @@
   </div>
   <div class="se-voice-content-body" :style="{ display: showSearchResult ? 'none' : 'flex' }">
     <list-wrapper title="类型">
-      <infinite-scroll v-model="voiceContentData.category" :page-size="categoryPageSize" :load="fetchCategories"
+      <infinite-scroll v-model="voiceContentData.categoryValue" :page-size="categoryPageSize" :load="fetchCategories"
         @update:model-value="categoryValueChangeHandler" @change="categoryChangeHandler"></infinite-scroll>
     </list-wrapper>
     <list-wrapper title="音色">
-      <infinite-scroll v-if="showVoiceList" v-model="voiceContentData.voiceId" :page-size="voicePageSize"
+      <infinite-scroll v-if="showVoiceList" v-model="voiceContentData.voiceValue" :page-size="voicePageSize"
         :load="fetchVoiceList" @change="voiceChangeHandler">
         <template #default="{ model, dataList }">
           <p class="se-voice-item" :class="{ activated: item.value === model }" :title="item.label"
@@ -56,8 +56,11 @@ const searchInput = ref('');
 const categoryDataList = ref<(LabelValue & Record<string, any>)[]>([]);
 const voiceDataList = ref<(LabelValue & Record<string, any>)[]>([]);
 const searchVoiceDataList = ref<(LabelValue & Record<string, any>)[]>([]);
-const searchVoiceId = ref<string>();
-const searchVoiceSrc = ref<string>();
+const searchSelectedVoice = ref<{
+  name?: string;
+  value?: string;
+  src?: string;
+}>({});
 const voiceContentData = defineModel<VoiceContentDataModel>({
   default: new VoiceContentData(),
 });
@@ -90,11 +93,11 @@ async function fetchVoiceList(
 ): Promise<(LabelValue & Record<string, any>)[]> {
   const voices = await fetchVoices({
     page,
-    category: voiceContentData.value.category,
+    category: voiceContentData.value.categoryValue,
   });
   return voices.map((item) => ({
     label: item.name,
-    value: item.id,
+    value: item.value,
     src: item.src,
   }));
 }
@@ -106,12 +109,13 @@ async function categoryChangeHandler(
   if (categoryData.length > 0) {
     categoryDataList.value = categoryData;
     if (
-      !voiceContentData.value.category ||
+      !voiceContentData.value.categoryValue ||
       !categoryData.some(
-        (item) => item.value === voiceContentData.value.category,
+        (item) => item.value === voiceContentData.value.categoryValue,
       )
     ) {
-      voiceContentData.value.category = categoryData[0].value as string;
+      voiceContentData.value.categoryName = categoryData[0].label;
+      voiceContentData.value.categoryValue = categoryData[0].value as string;
     }
     nextTick(() => {
       showVoiceList.value = true;
@@ -125,16 +129,19 @@ async function voiceChangeHandler(
   if (voiceData.length > 0) {
     voiceDataList.value = voiceData;
     if (
-      !voiceContentData.value.voiceId ||
-      !voiceData.some((item) => item.value === voiceContentData.value.voiceId)
+      !voiceContentData.value.voiceValue ||
+      !voiceData.some(
+        (item) => item.value === voiceContentData.value.voiceValue,
+      )
     ) {
-      voiceContentData.value.voiceId = voiceData[0].value as string;
+      voiceContentData.value.voiceName = voiceData[0].label;
+      voiceContentData.value.voiceValue = voiceData[0].value as string;
+      voiceContentData.value.voiceSrc = voiceData[0].src;
     }
   }
 }
 
 async function searchSubmitHandler() {
-  searchVoiceId.value = undefined;
   searchVoiceDataList.value = [];
   const voices = await searchVoices({
     word: searchInput.value,
@@ -142,26 +149,36 @@ async function searchSubmitHandler() {
   if (voices.length > 0) {
     searchVoiceDataList.value = voices.map((item) => ({
       label: item.name,
-      value: item.id,
+      value: item.value,
       src: item.src,
     }));
-    searchVoiceId.value = voices[0].id;
+    searchSelectedVoice.value = {
+      ...voices[0],
+    };
   }
 }
 
 function voiceSelectHandler(item: LabelValue & Record<string, any>) {
-  voiceContentData.value.voiceId = item.value as string;
+  voiceContentData.value.voiceName = item.label as string;
+  voiceContentData.value.voiceValue = item.value as string;
   voiceContentData.value.voiceSrc = item.src;
 }
 
 function voiceSearchSelectHandler(item: LabelValue & Record<string, any>) {
-  searchVoiceId.value = item.value as string;
-  searchVoiceSrc.value = item.src;
+  searchSelectedVoice.value = {
+    name: item.label,
+    value: item.value as string,
+    src: item.src,
+  };
 }
 
 function getData(): VoiceContentDataModel {
   if (showSearchResult.value) {
-    return { voiceId: searchVoiceId.value, voiceSrc: searchVoiceSrc.value };
+    return {
+      voiceName: searchSelectedVoice.value?.name,
+      voiceValue: searchSelectedVoice.value?.value,
+      voiceSrc: searchSelectedVoice.value?.src,
+    };
   } else {
     return toRaw(voiceContentData.value);
   }

@@ -1,13 +1,23 @@
 import type { VoiceContentDataModel } from './model';
 
 export class VoiceContentData implements VoiceContentDataModel {
-  constructor(category?: string, voiceId?: string, voiceSrc?: string) {
-    this.category = category;
-    this.voiceId = voiceId;
+  constructor(
+    categoryName?: string,
+    categoryValue?: string,
+    voiceName?: string,
+    voiceValue?: string,
+    voiceSrc?: string,
+  ) {
+    this.categoryName = categoryName;
+    this.categoryValue = categoryValue;
+    this.voiceName = voiceName;
+    this.voiceValue = voiceValue;
     this.voiceSrc = voiceSrc;
   }
 
-  category?: string;
-  voiceId?: string;
+  categoryName?: string;
+  categoryValue?: string;
+  voiceName?: string;
+  voiceValue?: string;
   voiceSrc?: string;
 }

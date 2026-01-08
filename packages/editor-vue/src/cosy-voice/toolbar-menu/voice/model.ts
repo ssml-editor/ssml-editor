@@ -1,6 +1,6 @@
 export interface ResponseVoice {
-  id: string;
   name: string;
+  value: string;
   src: string;
 }
 
@@ -14,7 +14,9 @@ export interface SearchVoiceParams {
 }
 
 export interface VoiceContentDataModel {
-  category?: string;
-  voiceId?: string;
+  categoryName?: string;
+  categoryValue?: string;
+  voiceName?: string;
+  voiceValue?: string;
   voiceSrc?: string;
 }
