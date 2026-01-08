@@ -4,6 +4,7 @@ import ElementPlus from 'unplugin-element-plus/vite';
 import {
   type ConfigEnv,
   type LogLevel,
+  type PluginOption,
   type UserConfig,
   defineConfig,
   loadEnv,
@@ -38,7 +39,7 @@ export default defineConfig(({ mode }: ConfigEnv): UserConfig => {
         },
       }),
       ElementPlus({}),
-    ],
+    ] as PluginOption[],
     server: {
       port: parseFloat(VITE_PORT),
       host: '0.0.0.0',

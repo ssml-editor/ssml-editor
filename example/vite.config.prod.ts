@@ -1,7 +1,13 @@
 import tailwindcss from '@tailwindcss/vite';
 import vue from '@vitejs/plugin-vue';
 import ElementPlus from 'unplugin-element-plus/vite';
-import { type ConfigEnv, type UserConfig, defineConfig, loadEnv } from 'vite';
+import {
+  type ConfigEnv,
+  type PluginOption,
+  type UserConfig,
+  defineConfig,
+  loadEnv,
+} from 'vite';
 import { createHtmlPlugin } from 'vite-plugin-html';
 import { viteUtils } from '../common/vite/vite-utils';
 
@@ -41,7 +47,7 @@ export default defineConfig(({ mode }: ConfigEnv): UserConfig => {
           },
         },
       }),
-    ],
+    ] as PluginOption[],
     optimizeDeps: {
       esbuildOptions: {
         target: 'esnext',
