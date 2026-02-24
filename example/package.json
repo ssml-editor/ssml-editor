@@ -45,7 +45,7 @@
   },
   "dependencies": {
     "@ssml-editor/editor-vue": "workspace:^",
-    "axios": "^1.13.2",
+    "axios": "^1.13.5",
     "axios-mock-adapter": "^2.1.0",
     "element-plus": "catalog:",
     "slate-vue3": "catalog:",

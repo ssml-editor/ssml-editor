@@ -43,14 +43,14 @@
     "rm": "rimraf cjs dist es"
   },
   "dependencies": {
-    "howler": "^2.2.4",
-    "is-what": "^5.5.0",
-    "localforage": "^1.10.0",
-    "typescript-event-emitter": "^2.1.0"
+    "howler": "catalog:",
+    "is-what": "catalog:",
+    "localforage": "catalog:",
+    "typescript-event-emitter": "catalog:"
   },
   "devDependencies": {
     "@rollup/plugin-terser": "catalog:",
-    "@types/howler": "^2.2.12",
+    "@types/howler": "catalog:",
     "@types/node": "catalog:",
     "glob": "catalog:",
     "rimraf": "catalog:",
