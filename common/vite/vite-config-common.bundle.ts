@@ -59,6 +59,7 @@ export function getBundleCommonViteConfig(): UserConfig {
               '@element-plus/icons-vue': 'ElementPlusIconsVue',
               'element-plus': 'ElementPlus',
               vue: 'Vue',
+              'cmu-pronouncing-dictionary': 'CMUPronouncingDictionary',
             },
           },
           {
@@ -78,6 +79,7 @@ export function getBundleCommonViteConfig(): UserConfig {
               '@element-plus/icons-vue': 'ElementPlusIconsVue',
               'element-plus': 'ElementPlus',
               vue: 'Vue',
+              'cmu-pronouncing-dictionary': 'CMUPronouncingDictionary',
             },
           },
         ],
