@@ -33,7 +33,6 @@ catalog:
   lodash: ^4.17.23
   mathjs: ^15.1.1
   pinyin-pro: ^3.28.0
-  pinyinize: ^3.3.1
   postcss: ^8.5.8
   postcss-nested: ^7.0.2
   rimraf: ^6.1.3

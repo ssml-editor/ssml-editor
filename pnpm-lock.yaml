@@ -75,9 +75,6 @@ catalogs:
     pinyin-pro:
       specifier: ^3.28.0
       version: 3.28.0
-    pinyinize:
-      specifier: ^3.3.1
-      version: 3.3.1
     postcss:
       specifier: ^8.5.8
       version: 8.5.8
@@ -179,9 +176,6 @@ importers:
       pinyin-pro:
         specifier: 'catalog:'
         version: 3.28.0
-      pinyinize:
-        specifier: 'catalog:'
-        version: 3.3.1
       slate-vue3:
         specifier: 'catalog:'
         version: 0.13.2(vue@3.5.31(typescript@5.9.3))
@@ -473,9 +467,6 @@ importers:
       pinyin-pro:
         specifier: 'catalog:'
         version: 3.28.0
-      pinyinize:
-        specifier: 'catalog:'
-        version: 3.3.1
       slate-vue3:
         specifier: 'catalog:'
         version: 0.13.2(vue@3.5.31(typescript@5.9.3))
@@ -6118,9 +6109,6 @@ packages:
 
   pinyin-pro@3.28.0:
     resolution: {integrity: sha512-mMRty6RisoyYNphJrTo3pnvp3w8OMZBrXm9YSWkxhAfxKj1KZk2y8T2PDIZlDDRsvZ0No+Hz6FI4sZpA6Ey25g==}
-
-  pinyinize@3.3.1:
-    resolution: {integrity: sha512-xxea97zhQBMWGtlUWNhtZGQce8FeBLasD0wzVsVn1+idQuPrYvb+E+yYkW8s1iIYb1ZYd6RVHCp0DFBS5DYEMw==}
 
   pkg-dir@4.2.0:
     resolution: {integrity: sha512-HRDzbaKjC+AOWVXxAU/x54COGeIv9eb+6CkDSQoNTt4XyWoIJvuPsXizxu/Fr23EiekbtZwmh1IcIG/l/a10GQ==}
@@ -14853,10 +14841,6 @@ snapshots:
   picomatch@4.0.4: {}
 
   pinyin-pro@3.28.0: {}
-
-  pinyinize@3.3.1:
-    dependencies:
-      lodash: 4.17.23
 
   pkg-dir@4.2.0:
     dependencies:

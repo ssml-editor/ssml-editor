@@ -68,7 +68,6 @@
     "lodash": "^4.17.23",
     "mathjs": "catalog:",
     "pinyin-pro": "catalog:",
-    "pinyinize": "catalog:",
     "slate-vue3": "catalog:",
     "typescript-event-emitter": "catalog:",
     "xml-formatter": "catalog:"
