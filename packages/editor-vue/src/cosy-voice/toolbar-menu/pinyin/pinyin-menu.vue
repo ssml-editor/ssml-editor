@@ -34,13 +34,19 @@ function hide() {
   popoverVisible.value = false
 }
 
-function getPinyinList(word: string): LabelValue[] {
-  const pinyinList = PinyinUtils.getPinyin(word)
-  const numberPinyinList = PinyinUtils.getPinyin(word, 'num')
-  return [{
-    label: pinyinList.join(' '),
-    value: numberPinyinList.join(' '),
-  }]
+function getPinyinList(text: string): LabelValue[] {
+  let pinyinList = PinyinUtils.getPinyin(text, undefined, true)
+  let numberPinyinList = PinyinUtils.getPinyin(text, 'num', true)
+  if (text.length > 1) {
+    pinyinList = [pinyinList.join(' ')]
+    numberPinyinList = [numberPinyinList.join(' ')]
+  }
+  return numberPinyinList.map((numberPinyin, index) => {
+    return {
+      label: pinyinList[index],
+      value: numberPinyin,
+    }
+  })
 }
 
 async function menuClickHandler() {
@@ -58,7 +64,7 @@ async function menuClickHandler() {
       if (pinyinList.value.length > 0) {
         show()
       } else {
-        throw new Warning('选中的文字不是多音字');
+        throw new Warning('仅支持为中文单词添加拼音');
       }
     }
   }

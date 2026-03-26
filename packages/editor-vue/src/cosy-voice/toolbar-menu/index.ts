@@ -3,7 +3,6 @@ export * from './break';
 export * from './english';
 export * from './menu.method';
 export * from './pinyin';
-export * from './polyphone';
 export * from './say-as';
 export * from './sound-event';
 export * from './speak';

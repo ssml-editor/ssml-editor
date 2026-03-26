@@ -24,24 +24,22 @@ export const PinyinUtils = {
 
   /**
    * 通过文字获取多音字的拼音
-   * @param word 单个文字
-   * @returns 拼音数组
+   * @param text 中文文本
+   * @returns 多音字的拼音数组
    */
-  getPolyphone(word: string, toneType?: CommonOptions['toneType']): string[] {
-    if (word.length === 1) {
-      const pinyinList = polyphonic(word, {
-        type: 'array',
-        toneType: toneType,
-      })[0];
-      if (toneType === 'num') {
-        return pinyinList.map((pinyin) => {
+  getPolyphone(text: string, toneType?: CommonOptions['toneType']): string[][] {
+    const pinyinList = polyphonic(text, {
+      type: 'array',
+      toneType: toneType,
+    });
+    if (toneType === 'num') {
+      return pinyinList.map((polyphoneList) => {
+        return polyphoneList.map((pinyin) => {
           return this.convertTone0To5(pinyin);
         });
-      } else {
-        return pinyinList;
-      }
+      });
     } else {
-      throw new Error('word必须是一个中文文字');
+      return pinyinList;
     }
   },
 
@@ -50,8 +48,16 @@ export const PinyinUtils = {
    * @param text 中文文本
    * @returns 拼音数组
    */
-  getPinyin(text: string, toneType?: CommonOptions['toneType']): string[] {
-    const pinyinList = pinyin(text, { type: 'array', toneType: toneType });
+  getPinyin(
+    text: string,
+    toneType?: CommonOptions['toneType'],
+    multiple?: boolean,
+  ): string[] {
+    const pinyinList = pinyin(text, {
+      type: 'array',
+      toneType: toneType,
+      multiple: multiple,
+    });
     if (toneType === 'num') {
       return pinyinList.map((pinyin) => {
         return this.convertTone0To5(pinyin);

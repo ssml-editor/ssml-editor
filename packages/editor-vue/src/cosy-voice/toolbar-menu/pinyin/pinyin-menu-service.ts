@@ -26,11 +26,11 @@ export class PinyinMenuService extends MenuBaseService {
       SPEAK_TYPE,
     );
     if (!speakNode) {
-      throw new Warning('只能为已设置了属性的段落中的中文单词设置拼音');
+      throw new Warning('仅支持为有属性的段落中的中文添加拼音');
     }
     const subNode = EditorUtils.findSelectedNodeByType(this.editor, SUB_TYPE);
     if (subNode) {
-      throw new Warning('不能为已设置了别名的文本设置拼音');
+      throw new Warning('已添加别名的文本无法添加拼音');
     }
     return false;
   }
