@@ -11,6 +11,7 @@ import {
   pastePlugin,
   PhonemeModule,
   PinyinMenu,
+  PolyphoneMenu,
   RedoMenu,
   RowContainerAlign,
   SaveMenu,
@@ -109,6 +110,9 @@ export default <EditorConfig>{
       },
       {
         component: PinyinMenu,
+      },
+      {
+        component: PolyphoneMenu,
       },
       {
         component: EnglishMenu,

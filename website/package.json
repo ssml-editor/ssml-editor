@@ -1,6 +1,6 @@
 {
   "name": "@ssml-editor/website",
-  "version": "1.0.4",
+  "version": "1.0.5",
   "private": true,
   "description": "SSML editor demo website",
   "homepage": "https://www.ssmleditor.com",
@@ -60,6 +60,6 @@
   },
   "engines": {
     "node": ">=22.12.0",
-    "pnpm": ">=10.24.0"
+    "pnpm": ">=10.33.0"
   }
 }

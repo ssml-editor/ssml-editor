@@ -1,6 +1,6 @@
 {
   "name": "@ssml-editor/editor-vue",
-  "version": "1.0.4",
+  "version": "1.0.5",
   "description": "all editor vue are settled here",
   "homepage": "https://www.ssmleditor.com",
   "repository": {
@@ -14,7 +14,7 @@
   "author": "hz <beijingren@vip.qq.com>",
   "engines": {
     "node": ">=22.12.0",
-    "pnpm": ">=10.24.0"
+    "pnpm": ">=10.33.0"
   },
   "type": "module",
   "exports": {
@@ -63,7 +63,6 @@
     "highlight.js": "catalog:",
     "mathjs": "catalog:",
     "pinyin-pro": "catalog:",
-    "pinyinize": "catalog:",
     "slate-vue3": "catalog:",
     "xml-formatter": "catalog:"
   },
@@ -84,9 +83,9 @@
     "tailwind-scrollbar": "catalog:",
     "tailwindcss": "catalog:",
     "typescript": "catalog:",
+    "unplugin-dts": "catalog:",
     "unplugin-element-plus": "catalog:",
     "vite": "catalog:",
-    "vite-plugin-dts": "catalog:",
     "vue": "catalog:",
     "vue-tsc": "catalog:"
   }

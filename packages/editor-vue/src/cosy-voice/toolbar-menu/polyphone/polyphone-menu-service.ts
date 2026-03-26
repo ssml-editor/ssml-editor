@@ -9,24 +9,27 @@ import { Warning } from '@ssml-editor/base';
 import { EditorUtils, MenuBaseService } from '@ssml-editor/vue';
 import { Range } from 'slate-vue3/core';
 
-export class PinyinMenuService extends MenuBaseService {
+export class PolyphoneMenuService extends MenuBaseService {
   override isDisabled(): boolean {
     if (super.isDisabled()) return true;
     const { selection } = this.editor;
     if (!selection) return true;
     if (Range.isCollapsed(selection)) {
-      throw new Warning('请框选中文单词');
+      throw new Warning('请框选一个中文文字');
     }
     const value = this.getText();
-    if (!/^[\u4E00-\u9FA5]+$/gi.test(value)) {
-      throw new Warning('请框选中文单词');
+    if (value.length != 1) {
+      throw new Warning('请框选一个中文文字');
+    }
+    if (!/^[\u4E00-\u9FA5]$/gi.test(value)) {
+      throw new Warning('请框选一个中文文字');
     }
     const speakNode = EditorUtils.findSelectedNodeByType(
       this.editor,
       SPEAK_TYPE,
     );
     if (!speakNode) {
-      throw new Warning('只能为已设置了属性的段落中的中文单词设置拼音');
+      throw new Warning('只能为已设置了属性的段落中的中文文字设置拼音');
     }
     const subNode = EditorUtils.findSelectedNodeByType(this.editor, SUB_TYPE);
     if (subNode) {

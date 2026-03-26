@@ -1,27 +1,33 @@
 <template>
-  <popover v-model="popoverVisible" :width="400" @submit="submitHandler">
-    <template #reference>
-      <Button icon-class="iconfont-ssml-editor icon-ssml-editor-tingdun" @click="menuClickHandler">插入停顿</Button>
-    </template>
+  <Button ref="menu-bar-button" icon-class="iconfont-ssml-editor icon-ssml-editor-tingdun"
+    @click="menuClickHandler">插入停顿</Button>
+  <Dialog title="插入停顿" width="400" :show-close="false" :destroy-on-close="true" v-model="popoverVisible"
+    :style="{ margin: margin }" @submit="submitHandler">
     <div class="se-break">
       <el-slider show-input size="small" v-model="time" :min="50" :max="10000" />
     </div>
-  </popover>
+  </Dialog>
 </template>
 
 <script setup lang="ts">
-import { Popover } from '@/component';
-import { type BaseEditor, Button } from '@ssml-editor/vue';
+import { Dialog } from '@/component';
+import { Button, type BaseEditor } from '@ssml-editor/vue';
+import { useElementBounding } from '@vueuse/core';
+import type { Property } from 'csstype';
 import { ElSlider } from 'element-plus';
-import { ref, shallowRef } from 'vue';
+import { ref, shallowRef, useTemplateRef, type Ref } from 'vue';
 import { BreakMenuService } from './break-menu-service';
 
 const { editor } = defineProps<{ editor?: BaseEditor }>();
 const breakMenuService = shallowRef<BreakMenuService>();
 const popoverVisible = ref(false);
 const time = ref(50);
+const margin: Ref<Property.Margin<string>> = ref('');
+const menuBarButtonRef = useTemplateRef('menu-bar-button')
+const { x, y, height } = useElementBounding(menuBarButtonRef as any)
 
 function show() {
+  margin.value = `${y.value + height.value}px 0 0 ${x.value}px`
   popoverVisible.value = true;
 }
 

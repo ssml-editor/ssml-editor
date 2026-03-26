@@ -1,4 +1,5 @@
-import { polyphonic } from 'pinyin-pro';
+import type { CommonOptions } from 'node_modules/pinyin-pro/types/common/type';
+import { pinyin, polyphonic } from 'pinyin-pro';
 
 export const PinyinUtils = {
   /**
@@ -6,7 +7,7 @@ export const PinyinUtils = {
    * @param pinyin 带数字音调的拼音
    * @returns 是或否
    */
-  isEndsWith(pinyin: string, end: string): boolean {
+  toneIsEndsWith(pinyin: string, end: string): boolean {
     return pinyin[pinyin.length - 1] === end;
   },
 
@@ -15,37 +16,48 @@ export const PinyinUtils = {
    * @param pinyin 带数字音调的拼音
    * @returns 转换后的拼音
    */
-  convert0To5(pinyin: string): string {
-    return this.isEndsWith(pinyin, '0')
+  convertTone0To5(pinyin: string): string {
+    return this.toneIsEndsWith(pinyin, '0')
       ? `${pinyin.slice(0, pinyin.length - 1)}5`
       : pinyin;
   },
 
   /**
-   * 去除数字音调0
-   * @param pinyin 数字音调拼音
-   * @returns
+   * 通过文字获取多音字的拼音
+   * @param word 单个文字
+   * @returns 拼音数组
    */
-  clearEnd5(pinyin: string) {
-    return this.isEndsWith(pinyin, '5')
-      ? pinyin.slice(0, pinyin.length - 1)
-      : pinyin;
+  getPolyphone(word: string, toneType?: CommonOptions['toneType']): string[] {
+    if (word.length === 1) {
+      const pinyinList = polyphonic(word, {
+        type: 'array',
+        toneType: toneType,
+      })[0];
+      if (toneType === 'num') {
+        return pinyinList.map((pinyin) => {
+          return this.convertTone0To5(pinyin);
+        });
+      } else {
+        return pinyinList;
+      }
+    } else {
+      throw new Error('word必须是一个中文文字');
+    }
   },
 
   /**
-   * 通过字获取拼音
-   * @param word 单个字
+   * 通过文字获取拼音
+   * @param text 中文文本
    * @returns 拼音数组
    */
-  getPinyin(word: string): string[] {
-    if (word.length === 1) {
-      return polyphonic(word, { type: 'array', toneType: 'num' })[0].map(
-        (pinyin) => {
-          return this.convert0To5(pinyin);
-        },
-      );
+  getPinyin(text: string, toneType?: CommonOptions['toneType']): string[] {
+    const pinyinList = pinyin(text, { type: 'array', toneType: toneType });
+    if (toneType === 'num') {
+      return pinyinList.map((pinyin) => {
+        return this.convertTone0To5(pinyin);
+      });
     } else {
-      throw new Error('word必须是一个中文字符');
+      return pinyinList;
     }
   },
 };

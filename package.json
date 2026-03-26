@@ -1,7 +1,7 @@
 {
   "name": "@ssml-editor/ssml-editor",
   "private": true,
-  "version": "1.0.4",
+  "version": "1.0.5",
   "homepage": "https://www.ssmleditor.com",
   "repository": {
     "type": "git",
@@ -16,7 +16,7 @@
     "slate",
     "slate-editor"
   ],
-  "packageManager": "pnpm@10.30.2",
+  "packageManager": "pnpm@10.33.0",
   "workspaces": [
     "packages/*",
     "example",
@@ -24,7 +24,7 @@
   ],
   "engines": {
     "node": ">=22.12.0",
-    "pnpm": ">=10.30.0"
+    "pnpm": ">=10.33.0"
   },
   "scripts": {
     "start": "pnpm dev:website",
@@ -65,10 +65,9 @@
     "howler": "catalog:",
     "is-what": "catalog:",
     "localforage": "catalog:",
-    "lodash": "catalog:",
+    "lodash": "^4.17.23",
     "mathjs": "catalog:",
     "pinyin-pro": "catalog:",
-    "pinyinize": "catalog:",
     "slate-vue3": "catalog:",
     "typescript-event-emitter": "catalog:",
     "xml-formatter": "catalog:"
@@ -76,7 +75,7 @@
   "devDependencies": {
     "@rollup/plugin-terser": "catalog:",
     "@rushstack/eslint-patch": "^1.16.1",
-    "@tailwindcss/postcss": "^4.2.1",
+    "@tailwindcss/postcss": "^4.2.2",
     "@tailwindcss/vite": "catalog:",
     "@types/file-saver": "catalog:",
     "@types/howler": "catalog:",
@@ -87,7 +86,7 @@
     "@vue/eslint-config-typescript": "^14.7.0",
     "csstype": "catalog:",
     "element-plus": "catalog:",
-    "eslint": "^10.0.2",
+    "eslint": "^10.1.0",
     "eslint-plugin-vue": "^10.8.0",
     "glob": "catalog:",
     "postcss": "catalog:",
@@ -100,9 +99,9 @@
     "tailwind-scrollbar": "catalog:",
     "tailwindcss": "catalog:",
     "typescript": "catalog:",
+    "unplugin-dts": "catalog:",
     "unplugin-element-plus": "catalog:",
     "vite": "catalog:",
-    "vite-plugin-dts": "catalog:",
     "vite-plugin-html": "catalog:",
     "vue": "catalog:",
     "vue-tsc": "catalog:"
