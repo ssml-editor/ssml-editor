@@ -1,5 +1,5 @@
 <template>
-  <div class="se-voice-content-search">
+  <div class="se-voice-content-search" v-if="searchVoices">
     <el-form @submit.prevent="searchSubmitHandler">
       <el-input v-model="searchInput" placeholder="搜索音色" clearable @input="searchInputHandler">
         <template #append>
@@ -69,7 +69,7 @@ const {
   voicePageSize = 10,
   fetchVoices = () => Promise.resolve([]),
   fetchCategories = () => Promise.resolve([]),
-  searchVoices = () => Promise.resolve([]),
+  searchVoices,
 } = defineProps<VoiceProps>();
 
 function searchInputHandler(value: string) {
@@ -143,9 +143,9 @@ async function voiceChangeHandler(
 
 async function searchSubmitHandler() {
   searchVoiceDataList.value = [];
-  const voices = await searchVoices({
+  const voices = searchVoices ? await searchVoices({
     word: searchInput.value,
-  });
+  }) : [];
   if (voices.length > 0) {
     searchVoiceDataList.value = voices.map((item) => ({
       label: item.name,

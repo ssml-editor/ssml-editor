@@ -1,5 +1,5 @@
 <template>
-  <div class="se-sound-event-content-search">
+  <div class="se-sound-event-content-search" v-if="searchSounds">
     <el-form @submit.prevent="searchSubmitHandler">
       <el-input v-model="searchInput" placeholder="搜索声音" clearable @input="searchInputHandler">
         <template #append>
@@ -65,7 +65,7 @@ const {
   soundPageSize = 10,
   fetchSounds = () => Promise.resolve([]),
   fetchCategories = () => Promise.resolve([]),
-  searchSounds = () => Promise.resolve([]),
+  searchSounds,
 } = defineProps<SoundEventProps>();
 
 function generateMark(
@@ -139,9 +139,9 @@ async function soundChangeHandler(soundData: LabelValue[]) {
 async function searchSubmitHandler() {
   searchSound.value = undefined;
   searchSoundDataList.value = [];
-  const sounds = await searchSounds({
+  const sounds = searchSounds ? await searchSounds({
     word: searchInput.value,
-  });
+  }) : [];
   if (sounds.length > 0) {
     searchSoundDataList.value = sounds.map((item) => ({
       label: item.name,

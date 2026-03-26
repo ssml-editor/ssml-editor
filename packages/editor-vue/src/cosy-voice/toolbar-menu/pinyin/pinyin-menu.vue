@@ -17,7 +17,6 @@ import { type Phoneme, Alphabet, PHONEME_TYPE } from '@/cosy-voice'
 import { Warning } from '@ssml-editor/base'
 import type { LabelValue } from '@ssml-editor/core'
 import { type BaseEditor, type BaseElement, Button, EditorUtils } from '@ssml-editor/vue'
-import pinyinize from 'pinyinize'
 import { onUnmounted, ref, shallowRef, watch } from 'vue'
 import { PinyinMenuService } from './pinyin-menu-service'
 import { PinyinUtils } from './pinyin-utils'
@@ -36,10 +35,11 @@ function hide() {
 }
 
 function getPinyinList(word: string): LabelValue[] {
-  const pinyinList = PinyinUtils.getPinyin(word)
-  return pinyinList.map((pinyin) => {
+  const pinyinList = PinyinUtils.getPolyphone(word)
+  const numberPinyinList = PinyinUtils.getPolyphone(word, 'num')
+  return numberPinyinList.map((pinyin, index) => {
     return {
-      label: pinyinize(PinyinUtils.clearEnd5(pinyin)),
+      label: pinyinList[index],
       value: pinyin,
     }
   })
