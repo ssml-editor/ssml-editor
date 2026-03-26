@@ -1,7 +1,7 @@
 <template>
-  <popover width="auto" v-model="popoverVisible" :show-footer="false">
+  <popover v-model="popoverVisible" :show-footer="false">
     <template #reference>
-      <Button icon-class="iconfont-ssml-editor icon-ssml-editor-pinyin" @click="menuClickHandler">拼音</Button>
+      <Button icon-class="iconfont-ssml-editor icon-ssml-editor-duoyinzi" @click="menuClickHandler">多音字</Button>
     </template>
     <ul class="se-pinyin">
       <li v-for="(item, index) in pinyinList" :key="index" @click="listItemClickHandler(item)">
@@ -18,13 +18,13 @@ import { Warning } from '@ssml-editor/base'
 import type { LabelValue } from '@ssml-editor/core'
 import { type BaseEditor, type BaseElement, Button, EditorUtils } from '@ssml-editor/vue'
 import { onUnmounted, ref, shallowRef, watch } from 'vue'
-import { PinyinMenuService } from './pinyin-menu-service'
-import { PinyinUtils } from './pinyin-utils'
+import { PinyinUtils } from '../pinyin/pinyin-utils'
+import { PolyphoneMenuService } from './polyphone-menu-service'
 
 const props = defineProps<{ editor?: BaseEditor }>()
 const popoverVisible = ref(false)
 const pinyinList = ref<LabelValue[]>([])
-const pinyinMenuService = shallowRef<PinyinMenuService>()
+const pinyinMenuService = shallowRef<PolyphoneMenuService>()
 
 function show() {
   popoverVisible.value = true
@@ -35,18 +35,20 @@ function hide() {
 }
 
 function getPinyinList(word: string): LabelValue[] {
-  const pinyinList = PinyinUtils.getPinyin(word)
-  const numberPinyinList = PinyinUtils.getPinyin(word, 'num')
-  return [{
-    label: pinyinList.join(' '),
-    value: numberPinyinList.join(' '),
-  }]
+  const pinyinList = PinyinUtils.getPolyphone(word)
+  const numberPinyinList = PinyinUtils.getPolyphone(word, 'num')
+  return numberPinyinList.map((pinyin, index) => {
+    return {
+      label: pinyinList[index],
+      value: pinyin,
+    }
+  })
 }
 
 async function menuClickHandler() {
   const editor = props.editor
   if (editor) {
-    pinyinMenuService.value ??= new PinyinMenuService(editor)
+    pinyinMenuService.value ??= new PolyphoneMenuService(editor)
     EditorUtils.trimSelection(editor)
     if (!pinyinMenuService.value.isDisabled()) {
       const text = pinyinMenuService.value.getText()
