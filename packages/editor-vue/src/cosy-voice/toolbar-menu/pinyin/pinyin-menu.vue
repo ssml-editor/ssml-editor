@@ -64,7 +64,7 @@ async function menuClickHandler() {
       if (pinyinList.value.length > 0) {
         show()
       } else {
-        throw new Warning('仅支持为中文单词添加拼音');
+        throw new Warning('未找到拼音');
       }
     }
   }

@@ -2,6 +2,7 @@ import {
   Alphabet,
   type Phoneme,
   PHONEME_TYPE,
+  SAY_AS_TYPE,
   SPEAK_TYPE,
   SUB_TYPE,
 } from '@/cosy-voice';
@@ -27,11 +28,18 @@ export class EnglishMenuService extends MenuBaseService {
       SPEAK_TYPE,
     );
     if (!speakNode) {
-      throw new Warning('只能为已设置了属性的段落中的英文单词设置音标');
+      throw new Warning('请先为段落添加属性');
     }
     const subNode = EditorUtils.findSelectedNodeByType(this.editor, SUB_TYPE);
     if (subNode) {
-      throw new Warning('不能为已设置了别名的文本设置音标');
+      throw new Warning('已添加别名的文本无法添加音标');
+    }
+    const sayAsNode = EditorUtils.findSelectedNodeByType(
+      this.editor,
+      SAY_AS_TYPE,
+    );
+    if (sayAsNode) {
+      throw new Warning('已添加读法的文本无法添加音标');
     }
     return false;
   }

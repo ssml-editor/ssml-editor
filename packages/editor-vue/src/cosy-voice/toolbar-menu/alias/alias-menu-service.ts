@@ -1,4 +1,12 @@
-import { SPEAK_TYPE, SUB_TYPE, type Sub } from '@/cosy-voice';
+import {
+  Alphabet,
+  PHONEME_TYPE,
+  SAY_AS_TYPE,
+  SPEAK_TYPE,
+  SUB_TYPE,
+  type Phoneme,
+  type Sub,
+} from '@/cosy-voice';
 import { Warning } from '@ssml-editor/base';
 import { EditorUtils, MenuBaseService } from '@ssml-editor/vue';
 import { Range, type Descendant } from 'slate-vue3/core';
@@ -9,14 +17,33 @@ export class AliasMenuService extends MenuBaseService {
     const { selection } = this.editor;
     if (!selection) return true;
     if (Range.isCollapsed(selection)) {
-      throw new Warning('请框选要设置别名的文本');
+      throw new Warning('请框选要添加别名的文本');
     }
     const speakNode = EditorUtils.findSelectedNodeByType(
       this.editor,
       SPEAK_TYPE,
     );
     if (!speakNode) {
-      throw new Warning('只能为已设置了属性的段落中的文本设置别名');
+      throw new Warning('请先为段落添加属性');
+    }
+    const sayAsNode = EditorUtils.findSelectedNodeByType(
+      this.editor,
+      SAY_AS_TYPE,
+    );
+    if (sayAsNode) {
+      throw new Warning('已添加读法的文本无法添加别名');
+    }
+    const phonemeNode = EditorUtils.findSelectedNodeByType(
+      this.editor,
+      PHONEME_TYPE,
+    );
+    if (phonemeNode) {
+      const alphabet = (phonemeNode as Phoneme).alphabet;
+      if (alphabet === Alphabet.PY) {
+        throw new Warning('已添加拼音的文本无法添加别名');
+      } else {
+        throw new Warning('已添加音标的文本无法添加别名');
+      }
     }
     return false;
   }

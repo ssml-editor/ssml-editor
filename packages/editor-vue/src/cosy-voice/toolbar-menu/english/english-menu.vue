@@ -59,7 +59,7 @@ async function menuClickHandler() {
         if (englishList.value.length > 0) {
           show()
         } else {
-          throw new Warning('找不到单词的音标');
+          throw new Warning('未找到音标');
         }
       }
     }
