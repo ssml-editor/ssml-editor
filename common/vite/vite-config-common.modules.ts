@@ -15,6 +15,7 @@ export function getModulesCommonViteConfig(): UserConfig {
         outDirs: ['es', 'cjs'],
         tsconfigPath: './tsconfig.json',
         insertTypesEntry: false,
+        processor: 'vue',
       }),
     ],
     build: {
