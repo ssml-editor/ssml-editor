@@ -1,7 +1,7 @@
 import { globSync } from 'glob';
 import path from 'node:path';
+import dts from 'unplugin-dts/vite';
 import { type UserConfig } from 'vite';
-import dts from 'vite-plugin-dts';
 import { getCommonViteConfig } from './vite-config-common';
 import { viteUtils } from './vite-utils';
 
@@ -12,7 +12,7 @@ export function getModulesCommonViteConfig(): UserConfig {
     plugins: [
       dts({
         entryRoot: viteUtils.pathResolve('src'),
-        outDir: ['es', 'cjs'],
+        outDirs: ['es', 'cjs'],
         tsconfigPath: './tsconfig.json',
         insertTypesEntry: false,
       }),

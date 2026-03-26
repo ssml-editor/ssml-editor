@@ -15,7 +15,7 @@
   "author": "hz <beijingren@vip.qq.com>",
   "engines": {
     "node": ">=22.12.0",
-    "pnpm": ">=10.24.0"
+    "pnpm": ">=10.33.0"
   },
   "type": "module",
   "exports": {
@@ -45,7 +45,7 @@
   },
   "dependencies": {
     "@ssml-editor/editor-vue": "workspace:^",
-    "axios": "^1.13.5",
+    "axios": "^1.13.6",
     "axios-mock-adapter": "^2.1.0",
     "element-plus": "catalog:",
     "slate-vue3": "catalog:",
