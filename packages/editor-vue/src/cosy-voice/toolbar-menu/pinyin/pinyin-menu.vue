@@ -1,7 +1,7 @@
 <template>
-  <popover v-model="popoverVisible" :show-footer="false">
+  <popover width="auto" v-model="popoverVisible" :show-footer="false">
     <template #reference>
-      <Button icon-class="iconfont-ssml-editor icon-ssml-editor-duoyinzi" @click="menuClickHandler">多音字</Button>
+      <Button icon-class="iconfont-ssml-editor icon-ssml-editor-pinyin" @click="menuClickHandler">拼音</Button>
     </template>
     <ul class="se-pinyin">
       <li v-for="(item, index) in pinyinList" :key="index" @click="listItemClickHandler(item)">
@@ -17,7 +17,6 @@ import { type Phoneme, Alphabet, PHONEME_TYPE } from '@/cosy-voice'
 import { Warning } from '@ssml-editor/base'
 import type { LabelValue } from '@ssml-editor/core'
 import { type BaseEditor, type BaseElement, Button, EditorUtils } from '@ssml-editor/vue'
-import pinyinize from 'pinyinize'
 import { onUnmounted, ref, shallowRef, watch } from 'vue'
 import { PinyinMenuService } from './pinyin-menu-service'
 import { PinyinUtils } from './pinyin-utils'
@@ -35,12 +34,17 @@ function hide() {
   popoverVisible.value = false
 }
 
-function getPinyinList(word: string): LabelValue[] {
-  const pinyinList = PinyinUtils.getPinyin(word)
-  return pinyinList.map((pinyin) => {
+function getPinyinList(text: string): LabelValue[] {
+  let pinyinList = PinyinUtils.getPinyin(text, undefined, true)
+  let numberPinyinList = PinyinUtils.getPinyin(text, 'num', true)
+  if (text.length > 1) {
+    pinyinList = [pinyinList.join(' ')]
+    numberPinyinList = [numberPinyinList.join(' ')]
+  }
+  return numberPinyinList.map((numberPinyin, index) => {
     return {
-      label: pinyinize(PinyinUtils.clearEnd5(pinyin)),
-      value: pinyin,
+      label: pinyinList[index],
+      value: numberPinyin,
     }
   })
 }
@@ -60,7 +64,7 @@ async function menuClickHandler() {
       if (pinyinList.value.length > 0) {
         show()
       } else {
-        throw new Warning('选中的字符不是多音字');
+        throw new Warning('未找到拼音');
       }
     }
   }

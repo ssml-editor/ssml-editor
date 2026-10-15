@@ -2,6 +2,7 @@ import {
   Alphabet,
   type Phoneme,
   PHONEME_TYPE,
+  SAY_AS_TYPE,
   SPEAK_TYPE,
   SUB_TYPE,
 } from '@/cosy-voice';
@@ -15,25 +16,29 @@ export class PinyinMenuService extends MenuBaseService {
     const { selection } = this.editor;
     if (!selection) return true;
     if (Range.isCollapsed(selection)) {
-      throw new Warning('请框选一个中文字符');
+      throw new Warning('请框选中文单词');
     }
     const value = this.getText();
-    if (value.length != 1) {
-      throw new Warning('请框选一个中文字符');
-    }
-    if (!/^[\u4E00-\u9FA5]$/gi.test(value)) {
-      throw new Warning('请框选一个中文字符');
+    if (!/^[\u4E00-\u9FA5]+$/gi.test(value)) {
+      throw new Warning('请框选中文单词');
     }
     const speakNode = EditorUtils.findSelectedNodeByType(
       this.editor,
       SPEAK_TYPE,
     );
     if (!speakNode) {
-      throw new Warning('只能为已设置了属性的段落中的中文字符设置拼音');
+      throw new Warning('请先为段落添加属性');
     }
     const subNode = EditorUtils.findSelectedNodeByType(this.editor, SUB_TYPE);
     if (subNode) {
-      throw new Warning('不能为已设置了别名的文本设置拼音');
+      throw new Warning('已添加别名的文本无法添加拼音');
+    }
+    const sayAsNode = EditorUtils.findSelectedNodeByType(
+      this.editor,
+      SAY_AS_TYPE,
+    );
+    if (sayAsNode) {
+      throw new Warning('已添加读法的文本无法添加拼音');
     }
     return false;
   }
@@ -54,13 +59,10 @@ export class PinyinMenuService extends MenuBaseService {
           PHONEME_TYPE,
         );
         if (node) {
-          const partialElement = element as Partial<Phoneme>;
-          delete partialElement.children;
-          delete partialElement.type;
-          EditorUtils.replaceNode(this.editor, node, partialElement);
-        } else {
-          this.editor.insertNode(element);
+          EditorUtils.removeSpace(this.editor, node);
+          EditorUtils.unwrapAllByNode(this.editor, node);
         }
+        this.editor.insertNode(element);
       }
     }
   }

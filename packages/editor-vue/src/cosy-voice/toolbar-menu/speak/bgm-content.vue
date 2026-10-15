@@ -1,5 +1,5 @@
 <template>
-  <div class="se-bgm-content-search">
+  <div class="se-bgm-content-search" v-if="searchBgms">
     <el-form @submit.prevent="searchSubmitHandler">
       <el-input v-model="searchInput" placeholder="搜索背景音乐" clearable @input="searchInputHandler">
         <template #append>
@@ -65,7 +65,7 @@ const {
   bgmCategoryPageSize = 10,
   fetchBgms = () => Promise.resolve([]),
   fetchCategories = () => Promise.resolve([]),
-  searchBgms = () => Promise.resolve([]),
+  searchBgms,
 } = defineProps<BgmProps>();
 
 function getMusicName(
@@ -137,9 +137,9 @@ async function musicChangeHandler(musicData: LabelValue[]) {
 async function searchSubmitHandler() {
   searchMusic.value = undefined;
   searchMusicDataList.value = [];
-  const bgms = await searchBgms({
+  const bgms = searchBgms ? await searchBgms({
     word: searchInput.value,
-  });
+  }) : [];
   if (bgms.length > 0) {
     searchMusicDataList.value = bgms.map((item) => ({
       label: item.name,

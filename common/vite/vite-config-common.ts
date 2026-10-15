@@ -33,6 +33,7 @@ export function getCommonViteConfig(): UserConfig {
           '@element-plus/icons-vue',
           'element-plus',
           'vue',
+          'cmu-pronouncing-dictionary',
         ],
       },
     },

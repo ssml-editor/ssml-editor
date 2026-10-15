@@ -1,6 +1,6 @@
 {
   "name": "@ssml-editor/editor-vue",
-  "version": "1.0.3",
+  "version": "1.0.6",
   "description": "all editor vue are settled here",
   "homepage": "https://www.ssmleditor.com",
   "repository": {
@@ -14,7 +14,7 @@
   "author": "hz <beijingren@vip.qq.com>",
   "engines": {
     "node": ">=22.12.0",
-    "pnpm": ">=10.24.0"
+    "pnpm": ">=10.33.0"
   },
   "type": "module",
   "exports": {
@@ -50,27 +50,26 @@
   },
   "dependencies": {
     "@element-plus/icons-vue": "catalog:",
-    "@highlightjs/vue-plugin": "^2.1.0",
-    "@popperjs/core": "^2.11.8",
+    "@highlightjs/vue-plugin": "catalog:",
+    "@popperjs/core": "catalog:",
     "@ssml-editor/base": "workspace:^",
     "@ssml-editor/core": "workspace:^",
     "@ssml-editor/modules": "workspace:^",
     "@ssml-editor/utils": "workspace:^",
     "@ssml-editor/vue": "workspace:^",
-    "cmu-pronouncing-dictionary": "^3.0.0",
-    "dayjs": "^1.11.19",
-    "file-saver": "^2.0.5",
-    "highlight.js": "^11.11.1",
-    "mathjs": "^15.1.0",
-    "pinyin-pro": "^3.27.0",
-    "pinyinize": "^3.3.1",
+    "cmu-pronouncing-dictionary": "catalog:",
+    "dayjs": "catalog:",
+    "file-saver": "catalog:",
+    "highlight.js": "catalog:",
+    "mathjs": "catalog:",
+    "pinyin-pro": "catalog:",
     "slate-vue3": "catalog:",
-    "xml-formatter": "^3.6.7"
+    "xml-formatter": "catalog:"
   },
   "devDependencies": {
     "@rollup/plugin-terser": "catalog:",
     "@tailwindcss/vite": "catalog:",
-    "@types/file-saver": "^2.0.7",
+    "@types/file-saver": "catalog:",
     "@types/node": "catalog:",
     "@vitejs/plugin-vue": "catalog:",
     "csstype": "catalog:",
@@ -84,9 +83,9 @@
     "tailwind-scrollbar": "catalog:",
     "tailwindcss": "catalog:",
     "typescript": "catalog:",
+    "unplugin-dts": "catalog:",
     "unplugin-element-plus": "catalog:",
     "vite": "catalog:",
-    "vite-plugin-dts": "catalog:",
     "vue": "catalog:",
     "vue-tsc": "catalog:"
   }

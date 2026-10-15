@@ -1,11 +1,11 @@
 @font-face {
   font-family: "iconfont-ssml-editor"; /* Project id 4958838 */
-  src: url('iconfont.eot?t=1760325684312'); /* IE9 */
-  src: url('iconfont.eot?t=1760325684312#iefix') format('embedded-opentype'), /* IE6-IE8 */
-       url('iconfont.woff2?t=1760325684312') format('woff2'),
-       url('iconfont.woff?t=1760325684312') format('woff'),
-       url('iconfont.ttf?t=1760325684312') format('truetype'),
-       url('iconfont.svg?t=1760325684312#iconfont-ssml-editor') format('svg');
+  src: url('iconfont.eot?t=1774505844961'); /* IE9 */
+  src: url('iconfont.eot?t=1774505844961#iefix') format('embedded-opentype'), /* IE6-IE8 */
+       url('iconfont.woff2?t=1774505844961') format('woff2'),
+       url('iconfont.woff?t=1774505844961') format('woff'),
+       url('iconfont.ttf?t=1774505844961') format('truetype'),
+       url('iconfont.svg?t=1774505844961#iconfont-ssml-editor') format('svg');
 }
 
 .iconfont-ssml-editor {
@@ -14,6 +14,10 @@
   font-style: normal;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+}
+
+.icon-ssml-editor-pinyin:before {
+  content: "\e62e";
 }
 
 .icon-ssml-editor-quanping:before {

@@ -25,7 +25,7 @@ const {
   placement = 'bottom',
   showFooter = true,
 } = defineProps<{
-  width?: number;
+  width?: string | number;
   placement?: Placement;
   showFooter?: boolean;
 }>();

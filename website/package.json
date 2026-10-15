@@ -1,6 +1,6 @@
 {
   "name": "@ssml-editor/website",
-  "version": "1.0.3",
+  "version": "1.0.6",
   "private": true,
   "description": "SSML editor demo website",
   "homepage": "https://www.ssmleditor.com",
@@ -34,15 +34,15 @@
     "antd": "^5.29.3",
     "clsx": "^2.1.1",
     "prism-react-renderer": "^2.4.1",
-    "react": "^19.2.3",
-    "react-dom": "^19.2.3",
+    "react": "^19.2.4",
+    "react-dom": "^19.2.4",
     "react-zmage": "^1.0.2"
   },
   "devDependencies": {
     "@docusaurus/module-type-aliases": "3.9.2",
     "@docusaurus/tsconfig": "3.9.2",
     "@docusaurus/types": "3.9.2",
-    "@types/react": "^19.2.7",
+    "@types/react": "^19.2.14",
     "gh-pages": "^6.3.0",
     "typescript": "catalog:"
   },
@@ -60,6 +60,6 @@
   },
   "engines": {
     "node": ">=22.12.0",
-    "pnpm": ">=10.24.0"
+    "pnpm": ">=10.33.0"
   }
 }
