@@ -44,3 +44,11 @@
 .header-github-link:hover:before {
   background-color: var(--ifm-navbar-link-hover-color);
 }
+
+.footer--dark a {
+  color: #fff;
+}
+
+.footer--dark a:hover {
+  color: var(--ifm-link-color);
+}

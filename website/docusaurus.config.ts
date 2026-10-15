@@ -134,7 +134,7 @@ const config: Config = {
           ],
         },
       ],
-      copyright: `Copyright © ${new Date().getFullYear()} ssmleditor.com. Built with Docusaurus.`,
+      copyright: `Copyright © ${new Date().getFullYear()} ssmleditor.com. Built with Docusaurus. <a target="_blank" href="https://beian.miit.gov.cn/">京ICP备06065906号-15</a>`,
     },
     prism: {
       theme: prismThemes.github,
